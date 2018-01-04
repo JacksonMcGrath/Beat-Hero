@@ -36,12 +36,9 @@ function loadAudio(object, audioLink) {
     request.onload = function() {
         context.decodeAudioData(request.response, function(buffer) {
             object.buffer = buffer;
-            console.log(object.buffer);
             soundName = $(object).data('soundname');
-            console.log(soundName);
             soundBuffers.push(object.buffer);
             bufSoundObj[soundName] = object.buffer;
-            console.log(bufSoundObj);
         });
     }
     request.send();
@@ -78,27 +75,44 @@ RhythmSample.play = function() {
 	var kick = bufSoundObj.kick
 	var snare = bufSoundObj.snare
   	var hihat = bufSoundObj.hihat
+  	var clap = bufSoundObj.clap
 
-	// We'll start playing the rhythm 100 milliseconds from "now"
-	var startTime = context.currentTime + 0.100;
-	var tempo = 120; // BPM (beats per minute)
+	//start playing the rhythm
+	var startTime = context.currentTime;
+	var tempo = 113; // BPM (beats per minute)
    	var eighthNoteTime = (60 / tempo) / 2;
+   	var sixteenthNoteTime = (60/ tempo) / 4;
 
 	// Play 2 bars of the following:
-	for (var bar = 0; bar < 2; bar++) {
-	   	var time = startTime + bar * 8 * eighthNoteTime;
-	    // Play the bass (kick) drum on beats 1, 5
+	for (var bar = 0; bar < 1; bar++) {
+	   	var time = startTime + bar * 16 * sixteenthNoteTime;
+	    
+	    // Play the bass (kick) drum on beats 1, 5, 15, 17, 21, 31 
 	    playSound(kick, time);
-	    playSound(kick, time + 4 * eighthNoteTime);
+	    playSound(kick, time + 4 * sixteenthNoteTime);
+	    playSound(kick, time + 14 * sixteenthNoteTime);
+	    playSound(kick, time + 16 * sixteenthNoteTime);
+	    playSound(kick, time + 20 * sixteenthNoteTime);
+	    playSound(kick, time + 30 * sixteenthNoteTime);
 
-	    // Play the snare drum on beats 3, 7
-	    playSound(snare, time + 2 * eighthNoteTime);
-	    playSound(snare, time + 6 * eighthNoteTime);
+	    // Play the snare drum on beats 9, 19, 25, 28
+	    playSound(snare, time + 8 * sixteenthNoteTime);
+	    playSound(snare, time + 18 * sixteenthNoteTime);
+	    playSound(snare, time + 24 * sixteenthNoteTime);
+	    playSound(snare, time + 27 * sixteenthNoteTime);
 
-	    // Play the hi-hat every eighthh note.
-	    for (var i = 0; i < 8; ++i) {
-	      playSound(hihat, time + i * eighthNoteTime);
-	    }
+	    // Play the hihat on beats 3, 7, 13, 19, 22, 29
+	    playSound(hihat, time + 2 * sixteenthNoteTime);
+	    playSound(hihat, time + 6 * sixteenthNoteTime);
+	    playSound(hihat, time + 12 * sixteenthNoteTime);
+	    playSound(hihat, time + 18 * sixteenthNoteTime);
+	    playSound(hihat, time + 21 * sixteenthNoteTime);
+	    playSound(hihat, time + 28 * sixteenthNoteTime);
+
+	    // Play the clap on beats 9, 11, 27
+	    playSound(clap, time + 8 * sixteenthNoteTime);
+	    playSound(clap, time + 10 * sixteenthNoteTime);
+	    playSound(clap, time + 26 * sixteenthNoteTime);
 	}
 };
 
