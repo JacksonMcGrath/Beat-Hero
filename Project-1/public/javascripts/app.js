@@ -37,7 +37,11 @@ function loadAudio(object, audioLink) {
         context.decodeAudioData(request.response, function(buffer) {
             object.buffer = buffer;
             console.log(object.buffer);
+            soundName = $(object).data('soundname');
+            console.log(soundName);
             soundBuffers.push(object.buffer);
+            bufSoundObj[soundName] = object.buffer;
+            console.log(bufSoundObj);
         });
     }
     request.send();
@@ -46,7 +50,7 @@ function loadAudio(object, audioLink) {
 function addAudioProperties(object) {
     object.name = object.id;
     object.source = $(object).data('sound');
-    object.soundName = $(object).data('soundname')
+    soundName = $(object).data('soundname');
     loadAudio(object, object.source);
     object.play = function () {
         var s = context.createBufferSource();
@@ -71,9 +75,9 @@ RhythmSample.play = function() {
 	    source.start(time);
   	}
 
-	var kick = soundBuffers[0]
-	var snare = soundBuffers[1]
-  	var hihat = soundBuffers[2]
+	var kick = bufSoundObj.kick
+	var snare = bufSoundObj.snare
+  	var hihat = bufSoundObj.hihat
 
 	// We'll start playing the rhythm 100 milliseconds from "now"
 	var startTime = context.currentTime + 0.100;
