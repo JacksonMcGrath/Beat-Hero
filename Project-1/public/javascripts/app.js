@@ -1,13 +1,102 @@
+// run through the pads and link audio to audiocontext
+
+$(function() {
+	$('.container div').each(function() {
+        addAudioProperties(this);
+    });
+
+//initiate event listener
+
+    $('.container div').on('mousedown', function() {
+        this.play();
+        console.log(context.currentTime);
+    });
+});
+
 // global variables
 	// score
-	// sounds?
+	// sounds
 
 let score = 0;
 
-let sounds = [
-"/audio/Kicks/CYCdh_AcouKick-03.wav",
-"/audio/Snares/CYCdh_LudFlamC-05.wav"
-]; 
+let soundBuffers = [];
+
+const bufSoundObj = {};
+
+//global audio context
+var context = new AudioContext();
+
+//Web Audio API load audio from data-sound html
+function loadAudio(object, audioLink) {
+
+    var request = new XMLHttpRequest();
+    request.open('GET', audioLink, true);
+    request.responseType = 'arraybuffer';
+
+    request.onload = function() {
+        context.decodeAudioData(request.response, function(buffer) {
+            object.buffer = buffer;
+            console.log(object.buffer);
+            soundBuffers.push(object.buffer);
+        });
+    }
+    request.send();
+}
+
+function addAudioProperties(object) {
+    object.name = object.id;
+    object.source = $(object).data('sound');
+    object.soundName = $(object).data('soundname')
+    loadAudio(object, object.source);
+    object.play = function () {
+        var s = context.createBufferSource();
+        s.buffer = object.buffer;
+        console.log(soundBuffers);
+        s.connect(context.destination);
+        s.start(0);
+        object.s = s;
+    }
+}
+
+var RhythmSample = {
+};
+
+RhythmSample.play = function() {
+  	function playSound(buffer, time) {
+	    var source = context.createBufferSource();
+	    source.buffer = buffer;
+	    source.connect(context.destination);
+	    if (!source.start)
+	    source.start = source.noteOn;
+	    source.start(time);
+  	}
+
+	var kick = soundBuffers[0]
+	var snare = soundBuffers[1]
+  	var hihat = soundBuffers[2]
+
+	// We'll start playing the rhythm 100 milliseconds from "now"
+	var startTime = context.currentTime + 0.100;
+	var tempo = 120; // BPM (beats per minute)
+   	var eighthNoteTime = (60 / tempo) / 2;
+
+	// Play 2 bars of the following:
+	for (var bar = 0; bar < 2; bar++) {
+	   	var time = startTime + bar * 8 * eighthNoteTime;
+	    // Play the bass (kick) drum on beats 1, 5
+	    playSound(kick, time);
+	    playSound(kick, time + 4 * eighthNoteTime);
+
+	    // Play the snare drum on beats 3, 7
+	    playSound(snare, time + 2 * eighthNoteTime);
+	    playSound(snare, time + 6 * eighthNoteTime);
+
+	    // Play the hi-hat every eighthh note.
+	    for (var i = 0; i < 8; ++i) {
+	      playSound(hihat, time + i * eighthNoteTime);
+	    }
+	}
+};
 
 // classes for each pad
 	// serial number 
@@ -24,7 +113,10 @@ class pad {
 		this.sound = sound;
 		this.id = id;
 	}
-		//non Web Audio solution
+}
+		
+		//non Web Audio API solution
+
 	// linkPad () {
 	// 	let $padAudio = $('<audio>').attr('src', this.sound);
 	// 	console.log($padAudio);
@@ -34,9 +126,6 @@ class pad {
 	// 		// $(this.id).addClass('padHit');
 	// 	});
 	// }
-
-
-}
 
 		// -----------colored pad hits (add later)-------------
 // $(this.id).on('mouseup', () => {
@@ -70,14 +159,14 @@ class round {
 	//link test
 
 // console.log($('#pad1'));
-let padOne = new pad ('kick', 1, sounds[0], '#pad1');
+// let padOne = new pad ('kick', 1, sounds[0], '#pad1');
 // console.log(padOne);
-padOne.linkPad();
+// padOne.linkPad();
 
-let padTwo = new pad ('snare', 2, sounds[1], '#pad2');
+// let padTwo = new pad ('snare', 2, sounds[1], '#pad2');
 
-padTwo.linkPad();
+// padTwo.linkPad();
 
-let padThree = new pad ('hiHat', 3, sounds[2], '#pad3');
+// let padThree = new pad ('hiHat', 3, sounds[2], '#pad3');
 
-padThree.linkPad();
+// padThree.linkPad();

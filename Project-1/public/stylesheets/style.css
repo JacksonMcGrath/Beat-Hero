@@ -6,8 +6,8 @@ body {
 	margin: 0 auto;
 	margin-top: 100px;
 	background-color: #EAECD4; 
-	width: 492px;
-	height: 492px;
+	width: 512px;
+	height: 512px;
 }
 
 .pads {
@@ -25,4 +25,16 @@ body {
 	margin: 10px;
 	display: inline-block;
 	background-color: #FF9A65;
+}
+
+#pad1, #pad2, #pad3, #pad4 {
+	margin-bottom: 20px;
+}
+
+#pad13, #pad14, #pad15, #pad16 {
+	margin-top: 20px;
+}
+
+#pad1, #pad5, #pad9, #pad13 {
+	margin-left: 20px;
 }
