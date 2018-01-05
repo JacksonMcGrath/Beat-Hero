@@ -1,6 +1,6 @@
-# h1 Beat Pad Hero 
+# Beat Pad Hero 
 
-# h3 beat pad hero is a game that challenges you to create beats like the best using the popular dj instrument the beat pad. 
+### beat pad hero is a game that challenges you to create beats like the best using the popular dj instrument the beat pad. 
 
 Djs and Producers like J Dilla have used beatpads like the MPC since the late 80s to layer drums, synths, and samples to create incredible music. In this game you are lead through levels of this same process. Layering different samples to create a complete beat. 
 
