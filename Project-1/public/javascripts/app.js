@@ -132,6 +132,8 @@ roundOneSample.play = function() {
 	    if (!source.start)
 	    source.start = source.noteOn;
 	    source.start(time);
+	    console.log(buffer);
+	    console.log(time);
   	}
 
 	var kick = bufSoundObj.kick
