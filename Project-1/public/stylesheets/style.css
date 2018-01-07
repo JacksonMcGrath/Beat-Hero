@@ -1,30 +1,50 @@
 body {
-	background-color: white;
+	background-color: #232323;
 }
 
 button {
 	margin: 0 auto;
 }
 
+.instrument {
+	background-color: #161616;
+	width: 960px;
+	height: 552px;
+	/*border: 2px solid grey;*/
+	margin: 0 auto;
+	margin-top: 120px;
+	box-shadow: 0 0 35px 10px #1C1C1C;
+	/*border-radius: 10px;*/
+}
+
+.right-pannel {
+	display: inline-block;
+}
+
 .buttons {
 	margin: 0 auto;
 	text-align: center;
+	display: inline-block;
 }
 
-.container {
-	margin: 0 auto;
-	margin-top: 100px;
-	background-color: #EAECD4; 
+.pad-container {
+	margin: 20px 40px 20px 20px;
+	background-image: url("https://i.imgur.com/eNC9W6B.png"); 
+	background-size: cover;
 	width: 512px;
 	height: 512px;
+	display: inline-block;
+	/*border-radius: 10px;*/
 }
 
 .pads {
+	background-image: url("https://i.imgur.com/hchdt1w.png");
+	background-size: cover;
 	height: 100px;
 	width: 100px;
 	margin: 10px;
 	display: inline-block;
-	background-color: #92958E;
+	/*background-color: #3F4249;*/
 	/*border-radius: 4px;*/
 }
 

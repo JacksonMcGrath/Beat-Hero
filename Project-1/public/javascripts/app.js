@@ -1,12 +1,12 @@
 // run through the pads and link audio to audiocontext
 
 $(function() {
-	$('.container div').each(function() {
+	$('.pad-container div').each(function() {
         addAudioProperties(this);
     });
 
 //initiate event listener
-    $('.container div').on('mousedown', function() {
+    $('.pad-container div').on('mousedown', function() {
         this.play();
         console.log(context.currentTime);
     });
@@ -18,6 +18,8 @@ $('#round-one-preview').on('click', function(){
 	roundOneSample.play()
 })
 
+//initiate event listener for full beat...
+	//could wait to show beat at the end...???
 $('#full-preview').on('click', function(){
 	console.log(context.currentTime);
 	fullRhythmSample.play()
@@ -130,7 +132,7 @@ const fullRhythmSample = {
 // Audio sequence of the first level
 let roundOneSample = {
 	play: () => {
-	  	playSound (buffer, time) => {
+	  	playSound = (buffer, time) => {
 		    let source = context.createBufferSource();
 		    source.buffer = buffer;
 		    source.connect(context.destination);
