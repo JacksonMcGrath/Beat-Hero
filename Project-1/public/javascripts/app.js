@@ -53,7 +53,7 @@ function loadAudio(object, audioLink) {
     request.send();
 }
 
-//function to run on load that calls loadAudio and sets up play functionality to the audioBuffers
+//function to run on load that calls loadAudio and sets up play functionality to the audioBuffers connected to the pads
 addAudioProperties = (object) => {
     object.name = object.id;
     object.source = $(object).data('sound');
@@ -68,6 +68,7 @@ addAudioProperties = (object) => {
     }
 }
 
+// Audio sequence of the completed song
 const fullRhythmSample = {
 	play: () => {
 	  	playSound = (buffer, time) => {
@@ -126,102 +127,59 @@ const fullRhythmSample = {
 	}
 };
 
+// Audio sequence of the first level
 let roundOneSample = {
-};
+	play: () => {
+	  	playSound (buffer, time) => {
+		    let source = context.createBufferSource();
+		    source.buffer = buffer;
+		    source.connect(context.destination);
+		    if (!source.start)
+		    source.start = source.noteOn;
+		    source.start(time);
+		    console.log(buffer);
+		    console.log(time);
+	  	}
 
-roundOneSample.play = function() {
-  	function playSound(buffer, time) {
-	    let source = context.createBufferSource();
-	    source.buffer = buffer;
-	    source.connect(context.destination);
-	    if (!source.start)
-	    source.start = source.noteOn;
-	    source.start(time);
-	    console.log(buffer);
-	    console.log(time);
-  	}
+		let kick = bufSoundObj.kick
+		let snare = bufSoundObj.snare
 
-	let kick = bufSoundObj.kick
-	let snare = bufSoundObj.snare
+		//start playing the rhythm
+		let startTime = context.currentTime;
+		let tempo = 113; // BPM (beats per minute)
+	   	let eighthNoteTime = (60 / tempo) / 2;
+	   	let sixteenthNoteTime = (60/ tempo) / 4;
 
-	//start playing the rhythm
-	let startTime = context.currentTime;
-	let tempo = 113; // BPM (beats per minute)
-   	let eighthNoteTime = (60 / tempo) / 2;
-   	let sixteenthNoteTime = (60/ tempo) / 4;
+		// Play 2 bars of the following:
+		for (let bar = 0; bar < 2; bar++) {
+		   	let time = startTime + bar * 32 * sixteenthNoteTime;
+		    
+		    // Play the bass (kick) drum on beats 1, 5, 15, 17, 21, 31 
+		    playSound(kick, time);
+		    playSound(kick, time + 4 * sixteenthNoteTime);
+		    playSound(kick, time + 14 * sixteenthNoteTime);
+		    playSound(kick, time + 16 * sixteenthNoteTime);
+		    playSound(kick, time + 20 * sixteenthNoteTime);
+		    playSound(kick, time + 30 * sixteenthNoteTime);
 
-	// Play 2 bars of the following:
-	for (let bar = 0; bar < 2; bar++) {
-	   	let time = startTime + bar * 32 * sixteenthNoteTime;
-	    
-	    // Play the bass (kick) drum on beats 1, 5, 15, 17, 21, 31 
-	    playSound(kick, time);
-	    playSound(kick, time + 4 * sixteenthNoteTime);
-	    playSound(kick, time + 14 * sixteenthNoteTime);
-	    playSound(kick, time + 16 * sixteenthNoteTime);
-	    playSound(kick, time + 20 * sixteenthNoteTime);
-	    playSound(kick, time + 30 * sixteenthNoteTime);
-
-	    // Play the snare drum on beats 9, 19, 25, 28
-	    playSound(snare, time + 8 * sixteenthNoteTime);
-	    playSound(snare, time + 18 * sixteenthNoteTime);
-	    playSound(snare, time + 24 * sixteenthNoteTime);
-	    playSound(snare, time + 27 * sixteenthNoteTime);
-	}
-};
-
-beginRoundOne.play = function() {
-  	function playSound(buffer, time) {
-	    let source = context.createBufferSource();
-	    source.buffer = buffer;
-	    source.connect(context.destination);
-	    if (!source.start)
-	    source.start = source.noteOn;
-	    source.start(time);
-	    console.log(buffer);
-	    console.log(time);
-  	}
-
-	let kick = bufSoundObj.kick
-	let snare = bufSoundObj.snare
-
-	//start playing the rhythm
-	let startTime = context.currentTime;
-	let tempo = 113; // BPM (beats per minute)
-   	let eighthNoteTime = (60 / tempo) / 2;
-   	let sixteenthNoteTime = (60/ tempo) / 4;
-
-	// Play 2 bars of the following:
-	for (let bar = 0; bar < 2; bar++) {
-	   	let time = startTime + bar * 32 * sixteenthNoteTime;
-	    
-	    // Play the click on beats 1, 5, 9, 13, 17, 31 
-	    playSound(kick, time);
-	    playSound(kick, time + 4 * sixteenthNoteTime);
-	    playSound(kick, time + 14 * sixteenthNoteTime);
-	    playSound(kick, time + 16 * sixteenthNoteTime);
-	    playSound(kick, time + 20 * sixteenthNoteTime);
-	    playSound(kick, time + 30 * sixteenthNoteTime);
-
-	    // Play the snare drum on beats 9, 19, 25, 28
-	    playSound(snare, time + 8 * sixteenthNoteTime);
-	    playSound(snare, time + 18 * sixteenthNoteTime);
-	    playSound(snare, time + 24 * sixteenthNoteTime);
-	    playSound(snare, time + 27 * sixteenthNoteTime);
+		    // Play the snare drum on beats 9, 19, 25, 28
+		    playSound(snare, time + 8 * sixteenthNoteTime);
+		    playSound(snare, time + 18 * sixteenthNoteTime);
+		    playSound(snare, time + 24 * sixteenthNoteTime);
+		    playSound(snare, time + 27 * sixteenthNoteTime);
+		}
 	}
 };
 
 //function that initiates a round using the hitCheck function and calculating using the start time of the round
 const startRound1 = function () {
 	let timeOfStart = context.currentTime;
-
 }
 
 // function to check against rhythmSample and upgrade score (function for each round)
 	//needs to log the start of the round and subtract that time from the other hits against the standard timing
 
 const hitCheck = function() {
-	
 }
 
 // classes for each pad
