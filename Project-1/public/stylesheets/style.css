@@ -7,7 +7,8 @@ button {
 }
 
 .instrument {
-	background-color: #161616;
+	/*background-color: #161616;*/
+	background-image: url('https://i.imgur.com/WbB3AWT.png');
 	width: 960px;
 	height: 552px;
 	/*border: 2px solid grey;*/
@@ -18,7 +19,15 @@ button {
 }
 
 .right-pannel {
+	height: 530px;
+	margin: 20px 20px 20px 0px;
 	display: inline-block;
+}
+
+#display {
+	width: 380px;
+	height: 150px;
+	background-color: tan;
 }
 
 .buttons {
@@ -28,7 +37,7 @@ button {
 }
 
 .pad-container {
-	margin: 20px 40px 20px 20px;
+	margin: 20px;
 	background-image: url("https://i.imgur.com/eNC9W6B.png"); 
 	background-size: cover;
 	width: 512px;
@@ -49,11 +58,12 @@ button {
 }
 
 .padHit {
+	background-image: url("https://i.imgur.com/hchdt1w.png");
+	background-size: cover;
 	height: 100px;
 	width: 100px;
 	margin: 10px;
 	display: inline-block;
-	background-color: #FF9A65;
 }
 
 #pad1, #pad2, #pad3, #pad4 {

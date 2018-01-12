@@ -1,49 +1,59 @@
-// run through the pads and link audio to audiocontext
 
+
+// run through the pads and link audio to audiocontext (on-load)
 $(function() {
 	$('.pad-container div').each(function() {
         addAudioProperties(this);
     });
 
-//initiate event listener
+// initiate event listener
     $('.pad-container div').on('mousedown', function() {
         this.play();
         console.log(context.currentTime);
+        console.log(this);
+        let padHit = this;
+        console.log(padHit);
+        fadeClass(padHit);
     });
 });
 
-//initiate event listener for preview of round one 
+// initiate event listener for preview of round one 
 $('#round-one-preview').on('click', function(){
 	console.log(context.currentTime);
 	roundOneSample.play()
 })
 
-//initiate event listener for full beat...
+// initiate event listener for full beat...
 	//could wait to show beat at the end...???
 $('#full-preview').on('click', function(){
 	console.log(context.currentTime);
 	fullRhythmSample.play()
 })
 
-//global score value to carry through the whole song
+		//-------------------------------- Global Variables --------------------------------//
+
+
+// global score value to carry through the whole song (saved and updated round-by-round)
 const score = 0;
 
-//store Web Audio audioBuffer objects converted from HTML 'data-sound' file
+// store Web Audio audioBuffer objects converted from HTML 'data-sound' file
 const bufSoundObj = {};
-//key = sound description (ex: kick)
-//value = audioBuffer object
+// key = sound description (ex: kick)
+// value = audioBuffer object
 
-//global audio context that the Web Audio API outputs through
+// global audio context that the Web Audio API outputs through
 const context = new AudioContext();
 
-//Web Audio API load audio from HTML 'data-sound'
-function loadAudio(object, audioLink) {
+		//-------------------------------- Functions --------------------------------//
+
+// Web Audio API load audio from HTML 'data-sound'
+const loadAudio = (object, audioLink) => {
 
     let request = new XMLHttpRequest();
     request.open('GET', audioLink, true);
     request.responseType = 'arraybuffer';
 
-//buffer and convert 'data-sound' into usable audioBuffer object
+// buffer and convert 'data-sound' into usable audioBuffer object
     request.onload = function() {
         context.decodeAudioData(request.response, function(buffer) {
             object.buffer = buffer;
@@ -55,8 +65,8 @@ function loadAudio(object, audioLink) {
     request.send();
 }
 
-//function to run on load that calls loadAudio and sets up play functionality to the audioBuffers connected to the pads
-addAudioProperties = (object) => {
+// function to run on load that calls loadAudio and sets up play functionality to the audioBuffers connected to the pads
+const addAudioProperties = (object) => {
     object.name = object.id;
     object.source = $(object).data('sound');
     soundName = $(object).data('soundname');
@@ -69,6 +79,8 @@ addAudioProperties = (object) => {
         object.s = s;
     }
 }
+
+		//-------------------------------- Objects --------------------------------//
 
 // Audio sequence of the completed song
 const fullRhythmSample = {
@@ -84,20 +96,20 @@ const fullRhythmSample = {
 		    console.log(context.currentTime);
 	  	}
 
-		let kick = bufSoundObj.kick
+	  	let kick = bufSoundObj.kick
 		let snare = bufSoundObj.snare
-	  	let hihat = bufSoundObj.hihat
-	  	let clap = bufSoundObj.clap
+		let hihat = bufSoundObj.hihat
+		let clap = bufSoundObj.clap
 
-		//start playing the rhythm
-		let startTime = context.currentTime;
+		// start playing the rhythm
+		let now = context.currentTime;
 		let tempo = 113; // BPM (beats per minute)
 	   	let eighthNoteTime = (60 / tempo) / 2;
 	   	let sixteenthNoteTime = (60/ tempo) / 4;
 
 		// Play 2 bars of the following:
 		for (let bar = 0; bar < 4; bar++) {
-		   	let time = startTime + bar * 32 * sixteenthNoteTime;
+		   	let time = now + bar * 32 * sixteenthNoteTime;
 		    
 		    // Play the bass (kick) drum on beats 1, 5, 15, 17, 21, 31 
 		    playSound(kick, time);
@@ -146,15 +158,15 @@ let roundOneSample = {
 		let kick = bufSoundObj.kick
 		let snare = bufSoundObj.snare
 
-		//start playing the rhythm
-		let startTime = context.currentTime;
+		// start playing the rhythm
+		let now = context.currentTime;
 		let tempo = 113; // BPM (beats per minute)
 	   	let eighthNoteTime = (60 / tempo) / 2;
 	   	let sixteenthNoteTime = (60/ tempo) / 4;
 
 		// Play 2 bars of the following:
 		for (let bar = 0; bar < 2; bar++) {
-		   	let time = startTime + bar * 32 * sixteenthNoteTime;
+		   	let time = now + bar * 32 * sixteenthNoteTime;
 		    
 		    // Play the bass (kick) drum on beats 1, 5, 15, 17, 21, 31 
 		    playSound(kick, time);
@@ -173,16 +185,32 @@ let roundOneSample = {
 	}
 };
 
-//function that initiates a round using the hitCheck function and calculating using the start time of the round
-const startRound1 = function () {
-	let timeOfStart = context.currentTime;
+// function that lights up the corisponding pad when Preview is played
+	// function will be called inside of each round's preview and full preview
+
+const fadeClass = () => {
+	console.log(padHit);
+    $(padHit).fadeOut(function () {
+    	$(padHit).removeClass("pads").addClass("padHit").fadeIn('fast');
+    });
+	// setTimeout(
+		$(padHit).fadeOut(function () {
+	    	$(padHit).removeClass("padHit").addClass("pads").fadeIn('fast');
+		});
+	// , 200)
 }
+
+
+// function that initiates a round using the hitCheck function and calculating using the start time of the round
+
+// const startRound1 = function () {
+// }
 
 // function to check against rhythmSample and upgrade score (function for each round)
-	//needs to log the start of the round and subtract that time from the other hits against the standard timing
+	// needs to log the start of the round and subtract that time from the other hits against the standard timing
 
-const hitCheck = function() {
-}
+// const hitCheck = function() {
+// }
 
 // classes for each pad
 	// serial number 
@@ -191,15 +219,6 @@ const hitCheck = function() {
 		// play sound
 		// check for timing
 			// update score
-
-class pad {
-	constructor (name, number, sound, id){
-		this.name = name;
-		this.number = number;
-		this.sound = sound;
-		this.id = id;
-	}
-}
 
 // classes for each round
 	// a sequence to replicate (triggered by Preview button)
