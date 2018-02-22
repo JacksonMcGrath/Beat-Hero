@@ -4,33 +4,34 @@
 	<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
 	<title></title>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 </head>
 <body>
 	<div class="instrument">
 		<section class="pad-container">
-			<div class= "pads" id="pad13"></div>
-			<div class= "pads" id="pad14"></div>
-			<div class= "pads" id="pad15"></div>
-			<div class= "pads" id="pad16"></div>
-			<div class= "pads" id="pad9"></div>
-			<div class= "pads" id="pad10"></div>
-			<div class= "pads" id="pad11"></div>
-			<div class= "pads" id="pad12"></div>
-			<div class= "pads" id="pad5" data-soundname="sample1" data-sound=""></div>
-			<div class= "pads" id="pad6" data-soundname="sample2" data-sound=""></div>
-			<div class= "pads" id="pad7" data-soundname="sample4" data-sound=""></div>
-			<div class= "pads" id="pad8" data-soundname="sample5" data-sound=""></div>
-			<div class= "pads" id="pad1" data-soundname="kick" data-sound="/audio/Kicks/Kick_3k_Deep.wav"></div>
-			<div class= "pads" id="pad2" data-soundname="snare" data-sound="/audio/Snares/Snare_70s_Vinyl.wav"></div>
-			<div class= "pads" id="pad3" data-soundname="hihat" data-sound="/audio/Cymbals/Hihat_Bluesbreak_Closed.wav"></div>
-			<div class= "pads" id="pad4" data-soundname="clap" data-sound="/audio/Alt_Percusion/Cowbell_LatinTing.wav"></div>
+			<div class="pads underlay" id="pad13"></div>
+			<div class="pads underlay" id="pad14"></div>
+			<div class="pads underlay" id="pad15"></div>
+			<div class="pads underlay" id="pad16"></div>
+			<div class="pads underlay" id="pad9"></div>
+			<div class="pads underlay" id="pad10"></div>
+			<div class="pads underlay" id="pad11"></div>
+			<div class="pads underlay" id="pad12"></div>
+			<div class="pads underlay" id="pad5" data-soundname="sample1" data-sound=""></div>
+			<div class="pads underlay" id="pad6" data-soundname="sample2" data-sound=""></div>
+			<div class="pads underlay" id="pad7" data-soundname="sample4" data-sound=""></div>
+			<div class="pads underlay" id="pad8" data-soundname="sample5" data-sound=""></div>
+			<div class="pads underlay" id="pad1" data-soundname="kick" data-sound="/audio/Kicks/Kick_3k_Deep.wav"></div>
+			<div class="pads underlay" id="pad2" data-soundname="snare" data-sound="/audio/Snares/Snare_70s_Vinyl.wav"></div>
+			<div class="pads underlay" id="pad3" data-soundname="hihat" data-sound="/audio/Cymbals/Hihat_Bluesbreak_Closed.wav"></div>
+			<div class="pads underlay" id="pad4" data-soundname="clap" data-sound="/audio/Alt_Percusion/Cowbell_LatinTing.wav"></div>
 		</section>
 		<section class="right-pannel">
 			<div id="display"></div>
-		<section class="buttons">
-			<button id="round-one-preview">Round One Preview</button>
-			<button id="full-preview">Full Preview</button>
-		</section>
+			<section class="button-container">
+				<button id="round-one-preview">Round One Preview</button>
+				<button id="full-preview">Full Preview</button>
+			</section>
 		</section>
 	</div>
 <script type="text/javascript" src="/javascripts/app.js"></script>

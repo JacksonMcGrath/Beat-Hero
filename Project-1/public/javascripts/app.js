@@ -1,19 +1,21 @@
 
-
 // run through the pads and link audio to audiocontext (on-load)
 $(function() {
 	$('.pad-container div').each(function() {
         addAudioProperties(this);
     });
 
-// initiate event listener
+// initiate event listener to play sample and display pad animation
     $('.pad-container div').on('mousedown', function() {
         this.play();
         console.log(context.currentTime);
-        console.log(this);
-        let padHit = this;
-        console.log(padHit);
-        fadeClass(padHit);
+
+        // glow animation
+        $(this).children('.pad-glow').remove()
+        let glowDiv = $('<div class="pad-glow">')
+        $(this).append(glowDiv)
+        glowDiv.fadeOut('50')
+        $(this).addClass('padHit');
     });
 });
 
@@ -30,6 +32,7 @@ $('#full-preview').on('click', function(){
 	fullRhythmSample.play()
 })
 
+
 		//-------------------------------- Global Variables --------------------------------//
 
 
@@ -44,7 +47,21 @@ const bufSoundObj = {};
 // global audio context that the Web Audio API outputs through
 const context = new AudioContext();
 
+
 		//-------------------------------- Functions --------------------------------//
+
+// Pad class change animation
+const fadeClass = (pad) => {
+	console.log(pad, 'pad from fadeClass');
+	$(pad).switchClass('pads', 'padHit'/*, 1000, 'swing'*/)
+	// resetClass(pad);
+
+}
+
+const resetClass = (pad) => {
+	console.log(pad);
+	$(pad).switchClass('padHit', 'pads'/*, 1000, 'swing'*/)
+}
 
 // Web Audio API load audio from HTML 'data-sound'
 const loadAudio = (object, audioLink) => {
@@ -64,6 +81,8 @@ const loadAudio = (object, audioLink) => {
     }
     request.send();
 }
+
+
 
 // function to run on load that calls loadAudio and sets up play functionality to the audioBuffers connected to the pads
 const addAudioProperties = (object) => {
@@ -188,19 +207,6 @@ let roundOneSample = {
 // function that lights up the corisponding pad when Preview is played
 	// function will be called inside of each round's preview and full preview
 
-const fadeClass = () => {
-	console.log(padHit);
-    $(padHit).fadeOut(function () {
-    	$(padHit).removeClass("pads").addClass("padHit").fadeIn('fast');
-    });
-	// setTimeout(
-		$(padHit).fadeOut(function () {
-	    	$(padHit).removeClass("padHit").addClass("pads").fadeIn('fast');
-		});
-	// , 200)
-}
-
-
 // function that initiates a round using the hitCheck function and calculating using the start time of the round
 
 // const startRound1 = function () {
@@ -227,3 +233,4 @@ const fadeClass = () => {
 	// a timer (triggered by Start button)
 	// a scoreboard
 	// log of pad hits with serial numbers and timestamp (to check against)
+
