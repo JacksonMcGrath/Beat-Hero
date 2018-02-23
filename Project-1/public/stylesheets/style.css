@@ -1,9 +1,9 @@
 body {
 	background-color: #232323;
-	margin: 0 auto;
+	margin: 0;
 	font-family: 'Rajdhani';
 	font-weight: 600;
-	color: #e7e7e7;
+	display: flex;
 }
 
 button {
@@ -14,20 +14,42 @@ button {
 	font-family: 'Rajdhani';
 	font-weight: 600;
 	font-size: 100%;
-	color: white;
+	color: grey;
+}
+
+button:hover {
+	width: 120px;
+	height: 40px;
+	background-color: #292929;
+	border: none;
+	font-family: 'Rajdhani';
+	font-weight: 600;
+	font-size: 100%;
+	animation-name: pad-fade-stay;
+	animation-duration: .25s;
+	animation-timing-function: ease;
+	animation-fill-mode: forwards;
+}
+
+
+h1 {
+	margin: 0;
+	font-size: 300%;
+}
+
+h2 {
+	margin: 0;
 }
 
 .instrument {
-	/*background-color: #161616;*/
 	background-image: url('https://i.imgur.com/WbB3AWT.png');
 	width: 960px;
 	height: 552px;
-	/*border: 2px solid grey;*/
-	margin: 0 auto;
+	margin-left: auto;
+	margin-right: auto;
 	margin-top: 120px;
 	box-shadow: 0 0 50px 10px #1C1C1C;
 	display: inline-flex;
-	/*border-radius: 10px;*/
 }
 
 .right-pannel {
@@ -42,8 +64,16 @@ button {
 	margin: 0px;
 	background-image: url('https://i.imgur.com/wNDVLGT.png');
 	background-position: center;
-	/*background-color: rgba(204,152,80,1);*/
-	/*box-shadow: inset 0 0 15px 5px rgba(0, 0, 0, .4);*/
+	display: flex;
+	justify-content: space-around;
+}
+
+.left {
+	margin-top: 55px;
+}
+
+.right {
+	margin-top: 40px;
 }
 
 .button-container {
@@ -92,6 +122,17 @@ button {
 	}
 	100% {
 		box-shadow: none;
+	}
+}
+
+@keyframes pad-fade-stay {
+	0% {
+		box-shadow: none;
+		color: grey;
+	}
+	100% {
+		box-shadow: 0 0 15px 2px rgba(204,152,80,.6);
+		color: rgba(204,152,80,1);
 	}
 }
 

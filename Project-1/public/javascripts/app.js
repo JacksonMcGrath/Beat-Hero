@@ -8,8 +8,6 @@ $(function() {
 // initiate event listener to play sample and display pad animation
     $('.pad-container div').on('mousedown', function() {
         this.play();
-        // console.log(context.currentTime);
-        // console.log(this);
 
         // glow animation
         $(this).children('.pad-glow').remove()
@@ -20,16 +18,19 @@ $(function() {
     });
 });
 
+// initiate event listener for play-round-one
+$('#play-round-one').on('click', function(){
+	roundOne.play()
+})
+
 // initiate event listener for preview of round one 
 $('#round-one-preview').on('click', function(){
-	console.log(context.currentTime);
 	roundOneSample.play()
 })
 
 // initiate event listener for full beat...
 	//could wait to show beat at the end...???
 $('#full-preview').on('click', function(){
-	console.log(context.currentTime);
 	fullRhythmSample.play()
 })
 
@@ -120,16 +121,12 @@ const fullRhythmSample = {
 		    source.buffer = buffer;
 		    source.connect(context.destination);
 		    if (!source.start)
-		    	source.start = source.noteOn;
-		    let something = source.start(time);
-		    console.log(source.start.toString())
+		    source.start = source.noteOn;
+		    source.start(time);
+
 		    // pad glow effect
-
 		    const calculatedTime = (time - now) * 1000;
-		    // console.log(calculatedTime + ' --- This is calculatedTime');
-
 		    setTimeout(samplePadGlow, calculatedTime, pad);
-
 	  	}
 
 	  	let kick = bufSoundObj.kick
@@ -180,24 +177,17 @@ const fullRhythmSample = {
 // Audio sequence of the first level
 let roundOneSample = {
 	play: () => {
-	  	playSound = (buffer, time) => {
+	  	playSound = (buffer, time, pad) => {
 		    let source = context.createBufferSource();
-
-		    // doesn't work
-		    // source.addEventListener('loaded', () => {
-		    // 	console.log('ding');
-		    // })
-
-		    // source.statechange = func;
-		    // function func(){
-		    // 	console.log("hey");
-		    // }
-
 		    source.buffer = buffer;
 		    source.connect(context.destination);
 		    if (!source.start)
 		    source.start = source.noteOn;
 		    source.start(time);
+
+		    // pad glow effect
+		    const calculatedTime = (time - now) * 1000;
+		    setTimeout(samplePadGlow, calculatedTime, pad);
 	  	}
 
 		let kick = bufSoundObj.kick
@@ -214,24 +204,59 @@ let roundOneSample = {
 		   	let time = now + bar * 32 * sixteenthNoteTime;
 		    
 		    // Play the bass (kick) drum on beats 1, 5, 15, 17, 21, 31 
-		    playSound(kick, time);
-		    playSound(kick, time + 4 * sixteenthNoteTime);
-		    playSound(kick, time + 14 * sixteenthNoteTime);
-		    playSound(kick, time + 16 * sixteenthNoteTime);
-		    playSound(kick, time + 20 * sixteenthNoteTime);
-		    playSound(kick, time + 30 * sixteenthNoteTime);
+		    playSound(kick, time, '#pad1');
+		    playSound(kick, time + 4 * sixteenthNoteTime, '#pad1');
+		    playSound(kick, time + 14 * sixteenthNoteTime, '#pad1');
+		    playSound(kick, time + 16 * sixteenthNoteTime, '#pad1');
+		    playSound(kick, time + 20 * sixteenthNoteTime, '#pad1');
+		    playSound(kick, time + 30 * sixteenthNoteTime, '#pad1');
 
 		    // Play the snare drum on beats 9, 19, 25, 28
-		    playSound(snare, time + 8 * sixteenthNoteTime);
-		    playSound(snare, time + 18 * sixteenthNoteTime);
-		    playSound(snare, time + 24 * sixteenthNoteTime);
-		    playSound(snare, time + 27 * sixteenthNoteTime);
+		    playSound(snare, time + 8 * sixteenthNoteTime, '#pad2');
+		    playSound(snare, time + 18 * sixteenthNoteTime, '#pad2');
+		    playSound(snare, time + 24 * sixteenthNoteTime, '#pad2');
+		    playSound(snare, time + 27 * sixteenthNoteTime, '#pad2');
 		}
 	}
 };
 
-// function that lights up the corisponding pad when Preview is played
-	// function will be called inside of each round's preview and full preview
+const roundOne = {
+	play: () => {
+	  	playSound = (buffer, time) => {
+		    let source = context.createBufferSource();
+		    source.buffer = buffer;
+		    source.connect(context.destination);
+		    if (!source.start)
+		    source.start = source.noteOn;
+		    source.start(time);
+	  	}
+
+	  	let kick = bufSoundObj.kick
+		let snare = bufSoundObj.snare
+		let hihat = bufSoundObj.hihat
+		let clap = bufSoundObj.clap
+
+		let now = context.currentTime;
+		let tempo = 113; // BPM (beats per minute)
+	   	let eighthNoteTime = (60 / tempo) / 2;
+	   	let sixteenthNoteTime = (60/ tempo) / 4;
+
+		// Play 2 bars of the following:
+		for (let bar = 0; bar < 2; bar++) {
+		   	let time = now + bar * 32 * sixteenthNoteTime;
+
+		    // Play the clap on beats 1,5,9,13
+		    playSound(clap, time);
+		    playSound(clap, time + 4 * sixteenthNoteTime);
+		    playSound(clap, time + 8 * sixteenthNoteTime);
+		    playSound(clap, time + 12 * sixteenthNoteTime);
+		    playSound(clap, time + 16 * sixteenthNoteTime);
+		    playSound(clap, time + 20 * sixteenthNoteTime);
+		    playSound(clap, time + 24 * sixteenthNoteTime);
+		    playSound(clap, time + 28 * sixteenthNoteTime);
+		}
+	}
+};
 
 // function that initiates a round using the hitCheck function and calculating using the start time of the round
 
