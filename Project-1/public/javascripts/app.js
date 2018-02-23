@@ -8,7 +8,8 @@ $(function() {
 // initiate event listener to play sample and display pad animation
     $('.pad-container div').on('mousedown', function() {
         this.play();
-        console.log(context.currentTime);
+        // console.log(context.currentTime);
+        // console.log(this);
 
         // glow animation
         $(this).children('.pad-glow').remove()
@@ -99,20 +100,36 @@ const addAudioProperties = (object) => {
     }
 }
 
+// function to trigger pad glow
+samplePadGlow = (pad) => {
+	$(pad).children('.pad-glow').remove()
+    let glowDiv = $('<div class="pad-glow">')
+    $(pad).append(glowDiv)
+    glowDiv.fadeOut('50')
+    $(pad).addClass('padHit');
+    // console.log(context.currentTime + ' --- This is when samplePadGlow ran');
+}
+
 		//-------------------------------- Objects --------------------------------//
 
 // Audio sequence of the completed song
 const fullRhythmSample = {
 	play: () => {
-	  	playSound = (buffer, time) => {
+	  	playSound = (buffer, time, pad) => {
 		    let source = context.createBufferSource();
 		    source.buffer = buffer;
 		    source.connect(context.destination);
 		    if (!source.start)
-		    source.start = source.noteOn;
-		    source.start(time);
-		    console.log(buffer);
-		    console.log(context.currentTime);
+		    	source.start = source.noteOn;
+		    let something = source.start(time);
+		    console.log(source.start.toString())
+		    // pad glow effect
+
+		    const calculatedTime = (time - now) * 1000;
+		    // console.log(calculatedTime + ' --- This is calculatedTime');
+
+		    setTimeout(samplePadGlow, calculatedTime, pad);
+
 	  	}
 
 	  	let kick = bufSoundObj.kick
@@ -131,31 +148,31 @@ const fullRhythmSample = {
 		   	let time = now + bar * 32 * sixteenthNoteTime;
 		    
 		    // Play the bass (kick) drum on beats 1, 5, 15, 17, 21, 31 
-		    playSound(kick, time);
-		    playSound(kick, time + 4 * sixteenthNoteTime);
-		    playSound(kick, time + 14 * sixteenthNoteTime);
-		    playSound(kick, time + 16 * sixteenthNoteTime);
-		    playSound(kick, time + 20 * sixteenthNoteTime);
-		    playSound(kick, time + 30 * sixteenthNoteTime);
+		    playSound(kick, time, '#pad1');
+		    playSound(kick, time + 4 * sixteenthNoteTime, '#pad1');
+		    playSound(kick, time + 14 * sixteenthNoteTime, '#pad1');
+		    playSound(kick, time + 16 * sixteenthNoteTime, '#pad1');
+		    playSound(kick, time + 20 * sixteenthNoteTime, '#pad1');
+		    playSound(kick, time + 30 * sixteenthNoteTime, '#pad1');
 
 		    // Play the snare drum on beats 9, 19, 25, 28
-		    playSound(snare, time + 8 * sixteenthNoteTime);
-		    playSound(snare, time + 18 * sixteenthNoteTime);
-		    playSound(snare, time + 24 * sixteenthNoteTime);
-		    playSound(snare, time + 27 * sixteenthNoteTime);
+		    playSound(snare, time + 8 * sixteenthNoteTime, '#pad2');
+		    playSound(snare, time + 18 * sixteenthNoteTime, '#pad2');
+		    playSound(snare, time + 24 * sixteenthNoteTime, '#pad2');
+		    playSound(snare, time + 27 * sixteenthNoteTime, '#pad2');
 
 		    // Play the hihat on beats 3, 7, 13, 19, 22, 29
-		    playSound(hihat, time + 2 * sixteenthNoteTime);
-		    playSound(hihat, time + 6 * sixteenthNoteTime);
-		    playSound(hihat, time + 12 * sixteenthNoteTime);
-		    playSound(hihat, time + 18 * sixteenthNoteTime);
-		    playSound(hihat, time + 21 * sixteenthNoteTime);
-		    playSound(hihat, time + 28 * sixteenthNoteTime);
+		    playSound(hihat, time + 2 * sixteenthNoteTime, '#pad3');
+		    playSound(hihat, time + 6 * sixteenthNoteTime, '#pad3');
+		    playSound(hihat, time + 12 * sixteenthNoteTime, '#pad3');
+		    playSound(hihat, time + 18 * sixteenthNoteTime, '#pad3');
+		    playSound(hihat, time + 21 * sixteenthNoteTime, '#pad3');
+		    playSound(hihat, time + 28 * sixteenthNoteTime, '#pad3');
 
 		    // Play the clap on beats 9, 11, 27
-		    playSound(clap, time + 8 * sixteenthNoteTime);
-		    playSound(clap, time + 10 * sixteenthNoteTime);
-		    playSound(clap, time + 26 * sixteenthNoteTime);
+		    playSound(clap, time + 8 * sixteenthNoteTime, '#pad4');
+		    playSound(clap, time + 10 * sixteenthNoteTime, '#pad4');
+		    playSound(clap, time + 26 * sixteenthNoteTime, '#pad4');
 		}
 	}
 };
@@ -165,13 +182,22 @@ let roundOneSample = {
 	play: () => {
 	  	playSound = (buffer, time) => {
 		    let source = context.createBufferSource();
+
+		    // doesn't work
+		    // source.addEventListener('loaded', () => {
+		    // 	console.log('ding');
+		    // })
+
+		    // source.statechange = func;
+		    // function func(){
+		    // 	console.log("hey");
+		    // }
+
 		    source.buffer = buffer;
 		    source.connect(context.destination);
 		    if (!source.start)
 		    source.start = source.noteOn;
 		    source.start(time);
-		    console.log(buffer);
-		    console.log(time);
 	  	}
 
 		let kick = bufSoundObj.kick

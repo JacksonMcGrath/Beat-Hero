@@ -1,11 +1,20 @@
 body {
 	background-color: #232323;
 	margin: 0 auto;
+	font-family: 'Rajdhani';
+	font-weight: 600;
+	color: #e7e7e7;
 }
 
 button {
 	width: 120px;
 	height: 40px;
+	background-color: #292929;
+	border: none;
+	font-family: 'Rajdhani';
+	font-weight: 600;
+	font-size: 100%;
+	color: white;
 }
 
 .instrument {
@@ -16,7 +25,7 @@ button {
 	/*border: 2px solid grey;*/
 	margin: 0 auto;
 	margin-top: 120px;
-	box-shadow: 0 0 35px 10px #1C1C1C;
+	box-shadow: 0 0 50px 10px #1C1C1C;
 	display: inline-flex;
 	/*border-radius: 10px;*/
 }
@@ -31,8 +40,10 @@ button {
 	width: 390px;
 	height: 150px;
 	margin: 0px;
-	background-color: rgba(204,152,80,1);
-	box-shadow: inset 0 0 100px 5px rgba(0, 0, 0, .8);
+	background-image: url('https://i.imgur.com/wNDVLGT.png');
+	background-position: center;
+	/*background-color: rgba(204,152,80,1);*/
+	/*box-shadow: inset 0 0 15px 5px rgba(0, 0, 0, .4);*/
 }
 
 .button-container {
