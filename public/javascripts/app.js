@@ -63,7 +63,7 @@ $(function() {
         glowDiv.fadeOut('50')
         $(this).addClass('padHit');
 
-        hitCheck(this.id, roundStart)
+        hitCheck(this.id, roundStart);
     });
 });
 
@@ -175,9 +175,14 @@ const padGlow = (pad) => {
 
 const hitCheck = (pad, roundStart) => {
 	if(roundStart === 0){
+		console.log(now);
 		console.log("The round hasn't started");
 	}else if(now - roundStart > 25){
+		console.log(now);
 		console.log("The round has concluded");
+	}else{
+		console.log(now);
+		console.log("pad hit during round");
 	}
 }
 
