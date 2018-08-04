@@ -62,6 +62,8 @@ $(function() {
         $(this).append(glowDiv)
         glowDiv.fadeOut('50')
         $(this).addClass('padHit');
+
+        hitCheck(this.id, roundStart)
     });
 });
 
@@ -171,11 +173,13 @@ const padGlow = (pad) => {
 
 // hitCheck function to constantly check pad hits against roundStart and 
 
-// const hitCheck = (pad, roundStart) => {
-// 	if(roundStart === 0){
-
-// 	}else if(roundStart > )
-// }
+const hitCheck = (pad, roundStart) => {
+	if(roundStart === 0){
+		console.log("The round hasn't started");
+	}else if(now - roundStart > 25){
+		console.log("The round has concluded");
+	}
+}
 
 // functions to play each pad (to trigger on keypress)
 const playPad = (buffer, pad) => {
@@ -204,7 +208,7 @@ const fullRhythmSample = {
 		    source.start(time);
 
 		    // set global roundStart variable and calculate target timing.
-		    let roundStart = context.currentTime;
+		    roundStart = context.currentTime;
 		    console.log("roundStart: " + roundStart);
 		    console.log(time + " : " + pad + " was hit");
 		    console.log("calculated targetHit = " + (time - roundStart));
@@ -270,7 +274,7 @@ const roundOneSample = {
 		    source.start = source.noteOn;
 		    source.start(time);
 
-		    let roundStart = context.currentTime;
+		    roundStart = context.currentTime;
 		    console.log("roundStart: " + roundStart);
 		    console.log(time + " : " + pad + " was hit");
 		    console.log("calculated targetHit = " + (time - roundStart));
@@ -319,7 +323,7 @@ const roundOne = {
 		    source.start = source.noteOn;
 		    source.start(time);
 
-		    let roundStart = context.currentTime;
+		    roundStart = context.currentTime;
 		    console.log("roundStart: " + roundStart);
 		    console.log(time + " : " + pad + " was hit");
 		    console.log("calculated targetHit = " + (time - roundStart));
