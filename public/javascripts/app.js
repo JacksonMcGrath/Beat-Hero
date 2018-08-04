@@ -1,4 +1,50 @@
 
+		//////////------------------------    Beat Hero    --------------------//////////////
+
+		//-------------------------------- Global Variables --------------------------------//
+
+
+// global score value to carry through the whole song (saved and updated round-by-round)
+const score = 0;
+
+// store Web Audio audioBuffer objects converted from HTML 'data-sound' file
+const bufSoundObj = {};
+// key = sound description (ex: kick)
+// value = audioBuffer object
+
+let kick = bufSoundObj.kick
+let snare = bufSoundObj.snare
+let hihat = bufSoundObj.hihat
+let clap = bufSoundObj.clap
+
+// global audio context that the Web Audio API outputs through
+const context = new AudioContext();
+
+let now = context.currentTime;
+
+// stated by the begining of the last round to be started. (used to calculate the targetHitTimes)
+let roundStart = 0;
+
+		//--------------------------------  Arrays  --------------------------------//
+ 
+const kickHits1 = [
+	
+];
+
+const snareHits1 = [
+
+];
+
+const hihatHits2 = [
+
+];
+
+const clapHits2 = [
+
+];
+
+		//-------------------------------- Event Listeners --------------------------------//
+
 // run through the pads and link audio to audiocontext (on-load)
 $(function() {
 	$('.pad-container div').each(function() {
@@ -8,6 +54,7 @@ $(function() {
 // initiate event listener to play sample and display pad animation
     $('.pad-container div').on('mousedown', function() {
         this.play();
+        console.log(this);
 
         // glow animation
         $(this).children('.pad-glow').remove()
@@ -29,25 +76,35 @@ $('#round-one-preview').on('click', function(){
 })
 
 // initiate event listener for full beat...
-	//could wait to show beat at the end...???
+	//could wait to show beat at the end...???ff
 $('#full-preview').on('click', function(){
 	fullRhythmSample.play()
 })
 
+// Map out the pads on the keys
 
-		//-------------------------------- Global Variables --------------------------------//
+$(document).keypress(function(e) {
+	// kick
+    if(e.which == 90) {
+        console.log("z triggered pad1: kick");
+        padGlow('#pad1');
+        playPad(bufSoundObj.kick, '#pad1')
+    } else if(e.which == 88){
+    	console.log("x triggered pad2: snare");
+        padGlow('#pad2');
+        playPad(bufSoundObj.snare, '#pad2')
+    } else if(e.which == 67){
+    	console.log("c triggered pad3: hihat");
+        padGlow('#pad3');
+        playPad(bufSoundObj.hihat, '#pad3')
+    } else if(e.which == 86){
+    	console.log("v triggered pad4: clap");
+        padGlow('#pad4');
+        playPad(bufSoundObj.clap, '#pad4')
+    } 
+});
 
 
-// global score value to carry through the whole song (saved and updated round-by-round)
-const score = 0;
-
-// store Web Audio audioBuffer objects converted from HTML 'data-sound' file
-const bufSoundObj = {};
-// key = sound description (ex: kick)
-// value = audioBuffer object
-
-// global audio context that the Web Audio API outputs through
-const context = new AudioContext();
 
 
 		//-------------------------------- Functions --------------------------------//
@@ -102,21 +159,43 @@ const addAudioProperties = (object) => {
 }
 
 // function to trigger pad glow
-samplePadGlow = (pad) => {
+const padGlow = (pad) => {
+	console.log(pad);
 	$(pad).children('.pad-glow').remove()
     let glowDiv = $('<div class="pad-glow">')
     $(pad).append(glowDiv)
     glowDiv.fadeOut('50')
     $(pad).addClass('padHit');
-    // console.log(context.currentTime + ' --- This is when samplePadGlow ran');
+    // console.log(context.currentTime + ' --- This is when(padGlow ran');
+}
+
+// hitCheck function to constantly check pad hits against roundStart and 
+
+// const hitCheck = (pad, roundStart) => {
+// 	if(roundStart === 0){
+
+// 	}else if(roundStart > )
+// }
+
+// functions to play each pad (to trigger on keypress)
+const playPad = (buffer, pad) => {
+	let source = context.createBufferSource();
+    source.buffer = buffer;
+    let kick = bufSoundObj.kick;
+    source.connect(context.destination);
+    if (!source.start)
+    source.start = source.noteOn;
+    source.start(0);
+    console.log("playPad ran " + buffer);
 }
 
 		//-------------------------------- Objects --------------------------------//
 
 // Audio sequence of the completed song
 const fullRhythmSample = {
-	play: () => {
-	  	playSound = (buffer, time, pad) => {
+	play: (buffer, time, pad) => {
+
+		playSound = (buffer, time, pad) => {
 		    let source = context.createBufferSource();
 		    source.buffer = buffer;
 		    source.connect(context.destination);
@@ -124,10 +203,16 @@ const fullRhythmSample = {
 		    source.start = source.noteOn;
 		    source.start(time);
 
+		    // set global roundStart variable and calculate target timing.
+		    let roundStart = context.currentTime;
+		    console.log("roundStart: " + roundStart);
+		    console.log(time + " : " + pad + " was hit");
+		    console.log("calculated targetHit = " + (time - roundStart));
+
 		    // pad glow effect
 		    const calculatedTime = (time - now) * 1000;
-		    setTimeout(samplePadGlow, calculatedTime, pad);
-	  	}
+		    setTimeout(padGlow, calculatedTime, pad);
+		}
 
 	  	let kick = bufSoundObj.kick
 		let snare = bufSoundObj.snare
@@ -136,7 +221,7 @@ const fullRhythmSample = {
 
 		// start playing the rhythm
 		let now = context.currentTime;
-		let tempo = 113; // BPM (beats per minute)
+		let tempo = 100; // BPM (beats per minute)
 	   	let eighthNoteTime = (60 / tempo) / 2;
 	   	let sixteenthNoteTime = (60/ tempo) / 4;
 
@@ -144,7 +229,7 @@ const fullRhythmSample = {
 		for (let bar = 0; bar < 4; bar++) {
 		   	let time = now + bar * 32 * sixteenthNoteTime;
 		    
-		    // Play the bass (kick) drum on beats 1, 5, 15, 17, 21, 31 
+		    // Play the kick drum on beats 1, 5, 15, 17, 21, 31 
 		    playSound(kick, time, '#pad1');
 		    playSound(kick, time + 4 * sixteenthNoteTime, '#pad1');
 		    playSound(kick, time + 14 * sixteenthNoteTime, '#pad1');
@@ -175,7 +260,7 @@ const fullRhythmSample = {
 };
 
 // Audio sequence of the first level
-let roundOneSample = {
+const roundOneSample = {
 	play: () => {
 	  	playSound = (buffer, time, pad) => {
 		    let source = context.createBufferSource();
@@ -185,9 +270,14 @@ let roundOneSample = {
 		    source.start = source.noteOn;
 		    source.start(time);
 
+		    let roundStart = context.currentTime;
+		    console.log("roundStart: " + roundStart);
+		    console.log(time + " : " + pad + " was hit");
+		    console.log("calculated targetHit = " + (time - roundStart));
+
 		    // pad glow effect
 		    const calculatedTime = (time - now) * 1000;
-		    setTimeout(samplePadGlow, calculatedTime, pad);
+		    setTimeout(padGlow, calculatedTime, pad);
 	  	}
 
 		let kick = bufSoundObj.kick
@@ -195,7 +285,7 @@ let roundOneSample = {
 
 		// start playing the rhythm
 		let now = context.currentTime;
-		let tempo = 113; // BPM (beats per minute)
+		let tempo = 100; // BPM (beats per minute)
 	   	let eighthNoteTime = (60 / tempo) / 2;
 	   	let sixteenthNoteTime = (60/ tempo) / 4;
 
@@ -203,14 +293,13 @@ let roundOneSample = {
 		for (let bar = 0; bar < 2; bar++) {
 		   	let time = now + bar * 32 * sixteenthNoteTime;
 		    
-		    // Play the bass (kick) drum on beats 1, 5, 15, 17, 21, 31 
+		    // Play the kick drum on beats 1, 5, 15, 17, 21, 31 
 		    playSound(kick, time, '#pad1');
 		    playSound(kick, time + 4 * sixteenthNoteTime, '#pad1');
 		    playSound(kick, time + 14 * sixteenthNoteTime, '#pad1');
 		    playSound(kick, time + 16 * sixteenthNoteTime, '#pad1');
 		    playSound(kick, time + 20 * sixteenthNoteTime, '#pad1');
 		    playSound(kick, time + 30 * sixteenthNoteTime, '#pad1');
-
 		    // Play the snare drum on beats 9, 19, 25, 28
 		    playSound(snare, time + 8 * sixteenthNoteTime, '#pad2');
 		    playSound(snare, time + 18 * sixteenthNoteTime, '#pad2');
@@ -220,15 +309,20 @@ let roundOneSample = {
 	}
 };
 
-const roundOne = {
+const roundOne = { 
 	play: () => {
-	  	playSound = (buffer, time) => {
+	  	playSound = (buffer, time, pad) => {
 		    let source = context.createBufferSource();
 		    source.buffer = buffer;
 		    source.connect(context.destination);
 		    if (!source.start)
 		    source.start = source.noteOn;
 		    source.start(time);
+
+		    let roundStart = context.currentTime;
+		    console.log("roundStart: " + roundStart);
+		    console.log(time + " : " + pad + " was hit");
+		    console.log("calculated targetHit = " + (time - roundStart));
 	  	}
 
 	  	let kick = bufSoundObj.kick
@@ -237,7 +331,7 @@ const roundOne = {
 		let clap = bufSoundObj.clap
 
 		let now = context.currentTime;
-		let tempo = 113; // BPM (beats per minute)
+		let tempo = 100; // BPM (beats per minute)
 	   	let eighthNoteTime = (60 / tempo) / 2;
 	   	let sixteenthNoteTime = (60/ tempo) / 4;
 
@@ -245,7 +339,7 @@ const roundOne = {
 		for (let bar = 0; bar < 2; bar++) {
 		   	let time = now + bar * 32 * sixteenthNoteTime;
 
-		    // Play the clap on beats 1,5,9,13
+		    // Play the clap on beats 1,5,9,13,17,21,25,29,33,37,41,45,49,53,57,61
 		    playSound(clap, time);
 		    playSound(clap, time + 4 * sixteenthNoteTime);
 		    playSound(clap, time + 8 * sixteenthNoteTime);
@@ -254,6 +348,15 @@ const roundOne = {
 		    playSound(clap, time + 20 * sixteenthNoteTime);
 		    playSound(clap, time + 24 * sixteenthNoteTime);
 		    playSound(clap, time + 28 * sixteenthNoteTime);
+		    playSound(clap, time + 32 * sixteenthNoteTime);
+
+		    playSound(clap, time + 36 * sixteenthNoteTime);
+		    playSound(clap, time + 40 * sixteenthNoteTime);
+		    playSound(clap, time + 44 * sixteenthNoteTime);
+		    playSound(clap, time + 48 * sixteenthNoteTime);
+		    playSound(clap, time + 52 * sixteenthNoteTime);
+		    playSound(clap, time + 56 * sixteenthNoteTime);
+		    playSound(clap, time + 60 * sixteenthNoteTime);
 		}
 	}
 };
@@ -266,8 +369,10 @@ const roundOne = {
 // function to check against rhythmSample and upgrade score (function for each round)
 	// needs to log the start of the round and subtract that time from the other hits against the standard timing
 
-// const hitCheck = function() {
-// }
+// Event Listener to check if (now) matches the correct pad and timing for any hit in a round. 
+	// first sort by pad
+	// then sort by any one perfect hit 
+	// then score the hit 
 
 // classes for each pad
 	// serial number 

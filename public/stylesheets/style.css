@@ -1,5 +1,5 @@
 body {
-	background-color: #232323;
+	background-color: #242424;
 	margin: 0;
 	font-family: 'Rajdhani';
 	font-weight: 600;
@@ -55,7 +55,7 @@ h2 {
 	width: 960px;
 	height: 552px;
 	margin: 0 auto;
-	box-shadow: 0 0 50px 10px #1C1C1C;
+	/*box-shadow: 0 0 50px 10px #1C1C1C;*/
 	display: flex;
 }
 
