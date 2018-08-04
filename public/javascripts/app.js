@@ -339,7 +339,7 @@ const roundOne = {
 		for (let bar = 0; bar < 2; bar++) {
 		   	let time = now + bar * 32 * sixteenthNoteTime;
 
-		    // Play the clap on beats 1,5,9,13,17,21,25,29,33,37,41,45,49,53,57,61
+		    // Play the clap on beats 1,5,9,13,17,21,25,29,33,37,41,45
 		    playSound(clap, time);
 		    playSound(clap, time + 4 * sixteenthNoteTime);
 		    playSound(clap, time + 8 * sixteenthNoteTime);
@@ -349,14 +349,9 @@ const roundOne = {
 		    playSound(clap, time + 24 * sixteenthNoteTime);
 		    playSound(clap, time + 28 * sixteenthNoteTime);
 		    playSound(clap, time + 32 * sixteenthNoteTime);
-
 		    playSound(clap, time + 36 * sixteenthNoteTime);
 		    playSound(clap, time + 40 * sixteenthNoteTime);
 		    playSound(clap, time + 44 * sixteenthNoteTime);
-		    playSound(clap, time + 48 * sixteenthNoteTime);
-		    playSound(clap, time + 52 * sixteenthNoteTime);
-		    playSound(clap, time + 56 * sixteenthNoteTime);
-		    playSound(clap, time + 60 * sixteenthNoteTime);
 		}
 	}
 };
