@@ -5,7 +5,7 @@
 
 
 // global score value to carry through the whole song (saved and updated round-by-round)
-const score = 0;
+let score = 0;
 
 // store Web Audio audioBuffer objects converted from HTML 'data-sound' file
 const bufSoundObj = {};
@@ -28,11 +28,29 @@ let roundStart = 0;
 		//--------------------------------  Arrays  --------------------------------//
  
 const kickHits1 = [
-	
+	2.4,
+	3,
+	4.5,
+	4.8,
+	5.4,
+	6.9,
+	7.2,
+	7.79,
+	9.29,
+	9.59,
+	10.19,
+	11.79,
 ];
 
 const snareHits1 = [
-
+	3.6,
+	5.1,
+	6,
+	6.45,
+	8.39,
+	9.89,
+	10.79,
+	11.24,
 ];
 
 const hihatHits2 = [
@@ -86,7 +104,6 @@ $('#full-preview').on('click', function(){
 // Map out the pads on the keys
 
 $(document).keypress(function(e) {
-	// kick
     if(e.which == 90) {
         console.log("z triggered pad1: kick");
         padGlow('#pad1');
@@ -171,19 +188,73 @@ const padGlow = (pad) => {
     // console.log(context.currentTime + ' --- This is when(padGlow ran');
 }
 
+// rangeCheck to score hit
+const rangeCheck = (roundPosition, target) => {
+	let break1 = target - .3;
+	let break2 = target - .15;
+	let break3 = target - .05;
+	let break4 = target + .05;
+	let break5 = target + .15;
+	let break6 = target + .3;
+	if (break3 <= roundPosition && roundPosition <= break4) {
+		score += 200;
+		console.log("Perfect! " + score);
+	} else if (break2 <= roundPosition && roundPosition <= break5) {
+		score += 125;
+		console.log("Great" + score);
+	} else if (break1 <= roundPosition && roundPosition <= break6) {
+		score += 75;
+		console.log("Good" + score);
+	}
+};
+
 // hitCheck function to constantly check pad hits against roundStart and 
 
 const hitCheck = (pad, roundStart) => {
-	if(roundStart === 0){
-		console.log(now);
-		console.log("The round hasn't started");
-	}else if(now - roundStart > 25){
-		console.log(now);
-		console.log("The round has concluded");
-	}else{
-		console.log(now);
-		console.log("pad hit during round");
-	}
+	let rndStart = roundStart;
+	let now = context.currentTime;
+	let roundPosition = now - roundStart;
+	if (rndStart == 0) {
+		console.log("now = " + now);
+		console.log("The round hasn't started yet rndStart = " + rndStart);
+	} else if (roundPosition >= 15) {
+		console.log("the round has ended");
+		console.log("roundPosition = " + roundPosition);
+	} else if (roundPosition < 0) {
+		console.log("hitCheck failure");
+		console.log("roundPosition = " + roundPosition);
+	} else {
+		if (pad == "pad1") {
+			if (roundPosition < 7.05) {
+				if (roundPosition >= 2.1 && roundPosition < 2.7) {
+					rangeCheck(roundPosition, 2.4);
+				} else if (roundPosition >= 2.7 && roundPosition < 3.3) {
+					rangeCheck(roundPosition, 3);
+				} else if (roundPosition >= 4.2 && roundPosition < 4.65) {
+					rangeCheck(roundPosition, 4.5);
+				} else if (roundPosition >= 4.65 && roundPosition < 5.1) {
+					rangeCheck(roundPosition, 4.8);
+				} else if (roundPosition >= 5.1 && roundPosition < 5.7) {
+					rangeCheck(roundPosition, 5.4);
+				} else if (roundPosition >= 6.6 && roundPosition < 7.05) {
+					rangeCheck(roundPosition, 6.9);
+				} else {
+					score -= 20;
+					console.log("Miss! : " + score);
+				}
+			} else {
+				console.log("hit the second window");
+			}
+		} else if (pad == "pad2") {
+			console.log(pad + " hit at " + roundPosition);
+		} else if (pad == "pad3") {
+			console.log(pad + " hit at " + roundPosition);
+		} else if (pad == "pad4") {
+			console.log(pad + " hit at " + roundPosition);
+		} else {
+			console.log("hitCheck missed all checks");
+		}
+ 	}
 }
 
 // functions to play each pad (to trigger on keypress)
@@ -192,7 +263,7 @@ const playPad = (buffer, pad) => {
     source.buffer = buffer;
     let kick = bufSoundObj.kick;
     source.connect(context.destination);
-    if (!source.start)
+    if (!source.start);
     source.start = source.noteOn;
     source.start(0);
     console.log("playPad ran " + buffer);
@@ -212,8 +283,6 @@ const fullRhythmSample = {
 		    source.start = source.noteOn;
 		    source.start(time);
 
-		    // set global roundStart variable and calculate target timing.
-		    roundStart = context.currentTime;
 		    console.log("roundStart: " + roundStart);
 		    console.log(time + " : " + pad + " was hit");
 		    console.log("calculated targetHit = " + (time - roundStart));
@@ -279,7 +348,6 @@ const roundOneSample = {
 		    source.start = source.noteOn;
 		    source.start(time);
 
-		    roundStart = context.currentTime;
 		    console.log("roundStart: " + roundStart);
 		    console.log(time + " : " + pad + " was hit");
 		    console.log("calculated targetHit = " + (time - roundStart));
@@ -329,9 +397,7 @@ const roundOne = {
 		    source.start(time);
 
 		    roundStart = context.currentTime;
-		    console.log("roundStart: " + roundStart);
-		    console.log(time + " : " + pad + " was hit");
-		    console.log("calculated targetHit = " + (time - roundStart));
+		    console.log(pad + "'s calculated targetHit = " + (time - roundStart));
 	  	}
 
 	  	let kick = bufSoundObj.kick
@@ -361,6 +427,20 @@ const roundOne = {
 		    playSound(clap, time + 36 * sixteenthNoteTime);
 		    playSound(clap, time + 40 * sixteenthNoteTime);
 		    playSound(clap, time + 44 * sixteenthNoteTime);
+
+		    // Play the kick drum on beats 1, 5, 15, 17, 21, 31
+		    playSound(kick, time + 16 * sixteenthNoteTime, '#pad1');
+		    playSound(kick, time + 20 * sixteenthNoteTime, '#pad1');
+		    playSound(kick, time + 30 * sixteenthNoteTime, '#pad1');
+		    playSound(kick, time + 32 * sixteenthNoteTime, '#pad1');
+		    playSound(kick, time + 36 * sixteenthNoteTime, '#pad1');
+		    playSound(kick, time + 46 * sixteenthNoteTime, '#pad1');
+
+		    // Play the snare drum on beats 9, 19, 25, 28
+		    playSound(snare, time + 24 * sixteenthNoteTime, '#pad2');
+		    playSound(snare, time + 34 * sixteenthNoteTime, '#pad2');
+		    playSound(snare, time + 40 * sixteenthNoteTime, '#pad2');
+		    playSound(snare, time + 43 * sixteenthNoteTime, '#pad2');
 		}
 	}
 };
