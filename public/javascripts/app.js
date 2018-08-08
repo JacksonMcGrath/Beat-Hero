@@ -72,7 +72,6 @@ $(function() {
 // initiate event listener to play sample and display pad animation
     $('.pad-container div').on('mousedown', function() {
         this.play();
-        console.log(this);
 
         // glow animation
         $(this).children('.pad-glow').remove()
@@ -190,21 +189,21 @@ const padGlow = (pad) => {
 
 // rangeCheck to score hit
 const rangeCheck = (roundPosition, target) => {
-	let break1 = target - .3;
-	let break2 = target - .15;
-	let break3 = target - .05;
-	let break4 = target + .05;
-	let break5 = target + .15;
-	let break6 = target + .3;
+	let break1 = target - .2;
+	let break2 = target - .07;
+	let break3 = target - .02;
+	let break4 = target + .02;
+	let break5 = target + .07;
+	let break6 = target + .2;
 	if (break3 <= roundPosition && roundPosition <= break4) {
 		score += 200;
-		console.log("Perfect! " + score);
+		console.log("Perfect! Score: " + score);
 	} else if (break2 <= roundPosition && roundPosition <= break5) {
 		score += 125;
-		console.log("Great" + score);
+		console.log("Great! Score: " + score);
 	} else if (break1 <= roundPosition && roundPosition <= break6) {
 		score += 75;
-		console.log("Good" + score);
+		console.log("Good! Score:  " + score);
 	}
 };
 
@@ -217,7 +216,7 @@ const hitCheck = (pad, roundStart) => {
 	if (rndStart == 0) {
 		console.log("now = " + now);
 		console.log("The round hasn't started yet rndStart = " + rndStart);
-	} else if (roundPosition >= 15) {
+	} else if (roundPosition >= 13) {
 		console.log("the round has ended");
 		console.log("roundPosition = " + roundPosition);
 	} else if (roundPosition < 0) {
@@ -226,27 +225,68 @@ const hitCheck = (pad, roundStart) => {
 	} else {
 		if (pad == "pad1") {
 			if (roundPosition < 7.05) {
-				if (roundPosition >= 2.1 && roundPosition < 2.7) {
+				if (roundPosition >= 2.2 && roundPosition < 2.6) {
 					rangeCheck(roundPosition, 2.4);
-				} else if (roundPosition >= 2.7 && roundPosition < 3.3) {
+				} else if (roundPosition >= 2.8 && roundPosition < 3.2) {
 					rangeCheck(roundPosition, 3);
-				} else if (roundPosition >= 4.2 && roundPosition < 4.65) {
+				} else if (roundPosition >= 4.3 && roundPosition < 4.65) {
 					rangeCheck(roundPosition, 4.5);
-				} else if (roundPosition >= 4.65 && roundPosition < 5.1) {
+				} else if (roundPosition >= 4.65 && roundPosition < 5) {
 					rangeCheck(roundPosition, 4.8);
-				} else if (roundPosition >= 5.1 && roundPosition < 5.7) {
+				} else if (roundPosition >= 5.2 && roundPosition < 5.6) {
 					rangeCheck(roundPosition, 5.4);
-				} else if (roundPosition >= 6.6 && roundPosition < 7.05) {
+				} else if (roundPosition >= 6.7 && roundPosition < 7.05) {
 					rangeCheck(roundPosition, 6.9);
 				} else {
-					score -= 20;
+					score -= 100;
 					console.log("Miss! : " + score);
 				}
 			} else {
-				console.log("hit the second window");
+				if (roundPosition >= 7.05 && roundPosition < 7.4) {
+					rangeCheck(roundPosition, 7.2);
+				} else if (roundPosition >= 7.59 && roundPosition < 7.99) {
+					rangeCheck(roundPosition, 7.79);
+				} else if (roundPosition >= 9.08 && roundPosition < 9.43) {
+					rangeCheck(roundPosition, 9.28);
+				} else if (roundPosition >= 9.43 && roundPosition < 9.79) {
+					rangeCheck(roundPosition, 9.59);
+				} else if (roundPosition >= 9.99 && roundPosition < 10.39) {
+					rangeCheck(roundPosition, 10.19);
+				} else if (roundPosition >= 11.59 && roundPosition < 11.99) {
+					rangeCheck(roundPosition, 11.79);
+				} else {
+					score -= 100;
+					console.log("Miss! : " + score);
+				}
 			}
 		} else if (pad == "pad2") {
-			console.log(pad + " hit at " + roundPosition);
+			if (roundPosition < 7.05) {
+				if (roundPosition >= 3.4  && roundPosition < 3.8) {
+					rangeCheck(roundPosition, 3.6)
+				} else if (roundPosition >= 4.9 && roundPosition < 5.3) {
+					rangeCheck(roundPosition, 5.1)
+				} else if (roundPosition >= 5.8 && roundPosition < 6.2) {
+					rangeCheck(roundPosition, 6)
+				} else if (roundPosition >= 6.25 && roundPosition < 6.65) {
+					rangeCheck(roundPosition, 6.45)
+				} else {
+					score -= 100;
+					console.log("Miss! : " + score);
+				}
+			} else {
+				if (roundPosition >= 8.09 && roundPosition < 8.59) {
+					rangeCheck(roundPosition, 8.39)
+				} else if (roundPosition >= 9.59 && roundPosition < 10.09) {
+					rangeCheck(roundPosition, 9.89)
+				} else if (roundPosition >= 10.49 && roundPosition < 10.99) {
+					rangeCheck(roundPosition, 10.79)
+				} else if (roundPosition >= 11.04 && roundPosition < 11.44) {
+					rangeCheck(roundPosition, 11.24)
+				} else {
+					score -= 100;
+					console.log("Miss! : " + score);
+				}
+			}
 		} else if (pad == "pad3") {
 			console.log(pad + " hit at " + roundPosition);
 		} else if (pad == "pad4") {
