@@ -50,6 +50,18 @@ h2 {
 	margin: 20px;
 }
 
+.logo {
+	width: 400px;
+	text-align: center;
+	margin: 0 auto;
+}
+
+.logo-container {
+	width: 100vw;
+	margin: 10px;
+	text-align: center;
+}
+
 .instrument {
 	background-image: url('https://i.imgur.com/WbB3AWT.png');
 	width: 960px;
@@ -69,7 +81,7 @@ h2 {
 	width: 390px;
 	height: 150px;
 	margin: 0px;
-	background-image: url('https://i.imgur.com/wNDVLGT.png');
+	background-image: url('https://i.imgur.com/QPamEWd.png');
 	background-position: center;
 	display: flex;
 	justify-content: space-around;
