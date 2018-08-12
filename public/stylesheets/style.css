@@ -1,5 +1,7 @@
 body {
-	background-color: #242424;
+	background-image: url("https://i.imgur.com/AULjBfI.jpg");
+	background-size: cover;
+	/*background-color: #242424;*/
 	margin: 0;
 	font-family: 'Rajdhani';
 	font-weight: 600;
