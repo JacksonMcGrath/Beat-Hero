@@ -7,6 +7,9 @@
 // global score value to carry through the whole song (saved and updated round-by-round)
 let score = 0;
 
+// name variable set by user after a round 
+let name = "";
+
 // global variable to keep track of current round
 let round = 1;
 
@@ -72,7 +75,7 @@ $(function() {
         addAudioProperties(this);
     });
 
-// initiate event listener to play sample and display pad animation
+// play sample and display pad animation
     $('.pad-container div').on('mousedown', function() {
         this.play();
 
@@ -87,20 +90,24 @@ $(function() {
     });
 });
 
-// initiate event listener for play-round-one
+// play-round-one
 $('#play-round-one').on('click', function(){
 	roundOne.play()
 })
 
-// initiate event listener for preview of round one 
+// preview of round one 
 $('#round-one-preview').on('click', function(){
 	roundOneSample.play()
 })
 
-// initiate event listener for full beat...
-	//could wait to show beat at the end...???ff
+// preview full beat...
 $('#full-preview').on('click', function(){
 	fullRhythmSample.play()
+})
+
+// about button
+$('#about').on('click', function(){
+	logScore("setup",score);
 })
 
 // Map out the pads on the keys
@@ -310,12 +317,11 @@ const playPad = (buffer, pad) => {
     source.buffer = buffer;
     let kick = bufSoundObj.kick;
     source.connect(context.destination);
-    if (!source.start);
+    if (!source.start)
     source.start = source.noteOn;
     source.start(0);
     console.log("playPad ran " + buffer);
-}
-
+};
 		//-------------------------------- Objects --------------------------------//
 
 // Audio sequence of the completed song
@@ -492,32 +498,31 @@ const roundOne = {
 	}
 };
 
-// function that initiates a round using the hitCheck function and calculating using the start time of the round
 
-// const startRound1 = function () {
-// }
+		//-------------------------------- Firebase --------------------------------//
 
-// function to check against rhythmSample and upgrade score (function for each round)
-	// needs to log the start of the round and subtract that time from the other hits against the standard timing
+const config = {
+	apiKey: "AIzaSyCiuZAUEgLH0MSqQtL_ivLJuxgAxxFneT0",
+	authDomain: "beat-hero.firebaseapp.com",
+	databaseURL: "https://beat-hero.firebaseio.com",
+	projectId: "beat-hero",
+	storageBucket: "beat-hero.appspot.com",
+	messagingSenderId: "242550214376"
+};
 
-// Event Listener to check if (now) matches the correct pad and timing for any hit in a round. 
-	// first sort by pad
-	// then sort by any one perfect hit 
-	// then score the hit 
+firebase.initializeApp(config);
 
-// classes for each pad
-	// serial number 
-	// unique sounds (could be held in a global variable)
-	// methods
-		// play sound
-		// check for timing
-			// update score
+console.log(firebase);
 
-// classes for each round
-	// a sequence to replicate (triggered by Preview button)
-		// a full audio sample to attempt to replicate 
-		// a matching timed visual sequence that shows the correct pads to hit
-	// a timer (triggered by Start button)
-	// a scoreboard
-	// log of pad hits with serial numbers and timestamp (to check against)
+const database = firebase.database();
 
+const logScore = (user, currentScore) => {
+	let data = {
+		name: user,
+		score: currentScore
+	}
+
+	let ref = database.ref('scores');
+	console.log(data);
+	ref.push(data);
+};
