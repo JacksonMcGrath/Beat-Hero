@@ -7,6 +7,9 @@
 // global score value to carry through the whole song (saved and updated round-by-round)
 let score = 0;
 
+// global variable to keep track of current round
+let round = 1;
+
 // store Web Audio audioBuffer objects converted from HTML 'data-sound' file
 const bufSoundObj = {};
 // key = sound description (ex: kick)
@@ -122,8 +125,12 @@ $(document).keypress(function(e) {
     } 
 });
 
+		//--------------------------------  jQuery  --------------------------------//
 
-
+// print the score variable
+$(document).on('mousedown', function() {
+	$('.scoreTic').text(score)
+});
 
 		//-------------------------------- Functions --------------------------------//
 
