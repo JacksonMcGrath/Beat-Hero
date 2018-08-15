@@ -3,30 +3,24 @@ body {
 	background-size: cover;
 	/*background-color: #242424;*/
 	margin: 0;
-	font-family: 'Rajdhani';
-	font-weight: 600;
+	font-family: 'Oswald';
+	font-weight: 200;
 	overflow-x: hidden;
 }
 
 button {
 	width: 120px;
 	height: 40px;
-	background-color: #292929;
+	background-image: url("https://i.imgur.com/mvigQIb.jpg");
+	background-size: cover;
 	border: none;
-	font-family: 'Rajdhani';
-	font-weight: 600;
+	font-family: 'Oswald';
+	font-weight: 300;
 	font-size: 100%;
 	color: grey;
 }
 
 button:hover {
-	width: 120px;
-	height: 40px;
-	background-color: #292929;
-	border: none;
-	font-family: 'Rajdhani';
-	font-weight: 600;
-	font-size: 100%;
 	animation-name: pad-fade-stay;
 	animation-duration: .25s;
 	animation-timing-function: ease;
@@ -36,10 +30,16 @@ button:hover {
 h1 {
 	margin: 0;
 	font-size: 300%;
+	font-weight: 400;
 }
 
 h2 {
 	margin: 0;
+	font-weight: 400;
+}
+
+p {
+	color: grey;
 }
 
 .title {
@@ -107,7 +107,7 @@ h2 {
 }
 
 .highlight {
-	background-color: #404040;
+	background-image: url("https://i.imgur.com/tENmVe5.jpg");
 }
 
 .center-btn {
@@ -192,4 +192,93 @@ h2 {
 
 #pad1, #pad5, #pad9, #pad13 {
 	margin-left: 18px;
+}
+
+/*---------------  Modals  -------------------*/
+
+.modal1 {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	overflow: auto;
+	background-color: rgba(0,0,0,.6);
+}
+
+.score-dialog {
+	width: 500px;
+	height: 600px;
+	background-color: #292929;
+	margin: 0 auto;
+	margin-top: 100px;
+	text-align: center;
+	display: block;
+}
+
+.gold {
+	display: none;
+}
+
+.silver {
+	display: none;
+}
+
+.bronze {
+	display: none;
+}
+
+.fail {
+	display: none;
+}
+
+.metal {
+	width: 200px;
+}
+
+.big-gold {
+	font-size: 250%;
+	font-weight: 400;
+	color: rgba(204,152,80,1);
+}
+
+.big-grey {
+	font-size: 250%;
+	font-weight: 400;
+	color: #898989;
+}
+
+.bigger-gold {
+	font-size: 600%;
+	font-weight: 400;
+	color: rgba(204,152,80,1);
+}
+
+.modal-options {
+	display: flex;
+	width: 500px;
+	justify-content: space-around;
+}
+
+.name-input {
+	width: 370px;
+	height: 40px;
+	background-color: #404040;
+	margin-bottom: 20px;
+	border: none;
+	text-align: center;
+	color: grey;
+	font-size: 120%;
+	font-family: 'Oswald';
+}
+
+.modal-message {
+	margin: 10px;
+}
+
+.small-dark {
+	font-size: 80%;
+	color: grey;
 }

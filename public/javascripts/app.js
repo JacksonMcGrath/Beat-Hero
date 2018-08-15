@@ -31,6 +31,8 @@ let now = context.currentTime;
 // stated by the begining of the last round to be started. (used to calculate the targetHitTimes)
 let roundStart = 0;
 
+let metal = "fail";
+
 		//--------------------------------  Arrays  --------------------------------//
  
 const kickHits1 = [
@@ -107,7 +109,7 @@ $('#full-preview').on('click', function(){
 
 // about button
 $('#about').on('click', function(){
-	logScore("setup",score);
+	showMetal();
 })
 
 // Map out the pads on the keys
@@ -132,12 +134,14 @@ $(document).keypress(function(e) {
     } 
 });
 
-		//--------------------------------  jQuery  --------------------------------//
-
 // print the score variable
 $(document).on('mousedown', function() {
 	$('.scoreTic').text(score)
 });
+
+$('.skip').on('click', function(){
+	closeModal();
+})
 
 		//-------------------------------- Functions --------------------------------//
 
@@ -322,7 +326,105 @@ const playPad = (buffer, pad) => {
     source.start(0);
     console.log("playPad ran " + buffer);
 };
+
+const roundEnd = () => {
+	handleMetal();
+	showMetal();
+	console.log("roundEnd ran");
+}
+
+// modal pop up calls according to what the score is 
+
+const showMetal = () => {
+	$(".modal1").css('display','block');
+	$("." + metal).css('display','block');
+	console.log(metal + ":: showMetal ran");
+};
+
+const closeModal = () => {
+	$(".modal1").css('display','none');
+	console.log("closeModal ran");
+}
+
+// change metal value based on current store
+const handleMetal = () => {
+	if(score < 1800) {
+		metal = "fail";
+	} else if (score >= 1800 && score < 2400) {
+		metal = "bronze";
+	} else if (score >= 2400 && score < 3000) {
+		metal = "silver";
+	} else if (score >= 3000) {
+		metal = "gold";
+	}
+}
+
+
 		//-------------------------------- Objects --------------------------------//
+
+const roundOne = { 
+	play: () => {
+
+		setTimeout(function() {
+			roundEnd()
+		}, 13000);
+
+	  	playSound = (buffer, time, pad) => {
+		    let source = context.createBufferSource();
+		    source.buffer = buffer;
+		    source.connect(context.destination);
+		    if (!source.start)
+		    source.start = source.noteOn;
+		    source.start(time);
+
+		    roundStart = context.currentTime;
+		    console.log(pad + "'s calculated targetHit = " + (time - roundStart));
+	  	}
+
+	  	let kick = bufSoundObj.kick
+		let snare = bufSoundObj.snare
+		let hihat = bufSoundObj.hihat
+		let clap = bufSoundObj.clap
+
+		let now = context.currentTime;
+		let tempo = 100; // BPM (beats per minute)
+	   	let eighthNoteTime = (60 / tempo) / 2;
+	   	let sixteenthNoteTime = (60/ tempo) / 4;
+
+		// Play 2 bars of the following:
+		for (let bar = 0; bar < 2; bar++) {
+		   	let time = now + bar * 32 * sixteenthNoteTime;
+
+		    // Play the clap on beats 1,5,9,13,17,21,25,29,33,37,41,45
+		    playSound(clap, time);
+		    playSound(clap, time + 4 * sixteenthNoteTime);
+		    playSound(clap, time + 8 * sixteenthNoteTime);
+		    playSound(clap, time + 12 * sixteenthNoteTime);
+		    playSound(clap, time + 16 * sixteenthNoteTime);
+		    playSound(clap, time + 20 * sixteenthNoteTime);
+		    playSound(clap, time + 24 * sixteenthNoteTime);
+		    playSound(clap, time + 28 * sixteenthNoteTime);
+		    playSound(clap, time + 32 * sixteenthNoteTime);
+		    playSound(clap, time + 36 * sixteenthNoteTime);
+		    playSound(clap, time + 40 * sixteenthNoteTime);
+		    playSound(clap, time + 44 * sixteenthNoteTime);
+
+		    // Play the kick drum on beats 1, 5, 15, 17, 21, 31
+		    playSound(kick, time + 16 * sixteenthNoteTime, '#pad1');
+		    playSound(kick, time + 20 * sixteenthNoteTime, '#pad1');
+		    playSound(kick, time + 30 * sixteenthNoteTime, '#pad1');
+		    playSound(kick, time + 32 * sixteenthNoteTime, '#pad1');
+		    playSound(kick, time + 36 * sixteenthNoteTime, '#pad1');
+		    playSound(kick, time + 46 * sixteenthNoteTime, '#pad1');
+
+		    // Play the snare drum on beats 9, 19, 25, 28
+		    playSound(snare, time + 24 * sixteenthNoteTime, '#pad2');
+		    playSound(snare, time + 34 * sixteenthNoteTime, '#pad2');
+		    playSound(snare, time + 40 * sixteenthNoteTime, '#pad2');
+		    playSound(snare, time + 43 * sixteenthNoteTime, '#pad2');
+		}
+	}
+};
 
 // Audio sequence of the completed song
 const fullRhythmSample = {
@@ -435,65 +537,6 @@ const roundOneSample = {
 		    playSound(snare, time + 18 * sixteenthNoteTime, '#pad2');
 		    playSound(snare, time + 24 * sixteenthNoteTime, '#pad2');
 		    playSound(snare, time + 27 * sixteenthNoteTime, '#pad2');
-		}
-	}
-};
-
-const roundOne = { 
-	play: () => {
-	  	playSound = (buffer, time, pad) => {
-		    let source = context.createBufferSource();
-		    source.buffer = buffer;
-		    source.connect(context.destination);
-		    if (!source.start)
-		    source.start = source.noteOn;
-		    source.start(time);
-
-		    roundStart = context.currentTime;
-		    console.log(pad + "'s calculated targetHit = " + (time - roundStart));
-	  	}
-
-	  	let kick = bufSoundObj.kick
-		let snare = bufSoundObj.snare
-		let hihat = bufSoundObj.hihat
-		let clap = bufSoundObj.clap
-
-		let now = context.currentTime;
-		let tempo = 100; // BPM (beats per minute)
-	   	let eighthNoteTime = (60 / tempo) / 2;
-	   	let sixteenthNoteTime = (60/ tempo) / 4;
-
-		// Play 2 bars of the following:
-		for (let bar = 0; bar < 2; bar++) {
-		   	let time = now + bar * 32 * sixteenthNoteTime;
-
-		    // Play the clap on beats 1,5,9,13,17,21,25,29,33,37,41,45
-		    playSound(clap, time);
-		    playSound(clap, time + 4 * sixteenthNoteTime);
-		    playSound(clap, time + 8 * sixteenthNoteTime);
-		    playSound(clap, time + 12 * sixteenthNoteTime);
-		    playSound(clap, time + 16 * sixteenthNoteTime);
-		    playSound(clap, time + 20 * sixteenthNoteTime);
-		    playSound(clap, time + 24 * sixteenthNoteTime);
-		    playSound(clap, time + 28 * sixteenthNoteTime);
-		    playSound(clap, time + 32 * sixteenthNoteTime);
-		    playSound(clap, time + 36 * sixteenthNoteTime);
-		    playSound(clap, time + 40 * sixteenthNoteTime);
-		    playSound(clap, time + 44 * sixteenthNoteTime);
-
-		    // Play the kick drum on beats 1, 5, 15, 17, 21, 31
-		    playSound(kick, time + 16 * sixteenthNoteTime, '#pad1');
-		    playSound(kick, time + 20 * sixteenthNoteTime, '#pad1');
-		    playSound(kick, time + 30 * sixteenthNoteTime, '#pad1');
-		    playSound(kick, time + 32 * sixteenthNoteTime, '#pad1');
-		    playSound(kick, time + 36 * sixteenthNoteTime, '#pad1');
-		    playSound(kick, time + 46 * sixteenthNoteTime, '#pad1');
-
-		    // Play the snare drum on beats 9, 19, 25, 28
-		    playSound(snare, time + 24 * sixteenthNoteTime, '#pad2');
-		    playSound(snare, time + 34 * sixteenthNoteTime, '#pad2');
-		    playSound(snare, time + 40 * sixteenthNoteTime, '#pad2');
-		    playSound(snare, time + 43 * sixteenthNoteTime, '#pad2');
 		}
 	}
 };
