@@ -343,7 +343,8 @@ const showMetal = () => {
 
 const closeModal = () => {
 	$(".modal1").css('display','none');
-	console.log("closeModal ran");
+	score = 0;
+	$('.scoreTic').text(score);
 }
 
 // change metal value based on current store
