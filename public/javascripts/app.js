@@ -10,6 +10,9 @@ let score = 0;
 // name variable set by user after a round 
 let name = "";
 
+// array of objects holding the firebase call key value pairs 
+let leaderboard = [];
+
 // global variable to keep track of current round
 let round = 1;
 
@@ -69,6 +72,8 @@ const clapHits2 = [
 
 ];
 
+
+
 		//-------------------------------- Event Listeners --------------------------------//
 
 // run through the pads and link audio to audiocontext (on-load)
@@ -90,27 +95,54 @@ $(function() {
 
         hitCheck(this.id, roundStart);
     });
+
+    ref.on('value', gotData, errData);
 });
 
 // play-round-one
 $('#play-round-one').on('click', function(){
 	roundOne.play()
-})
+});
 
 // preview of round one 
 $('#round-one-preview').on('click', function(){
 	roundOneSample.play()
-})
+});
 
 // preview full beat...
 $('#full-preview').on('click', function(){
 	fullRhythmSample.play()
-})
+});
 
 // about button
 $('#about').on('click', function(){
 	showMetal();
-})
+});
+
+$('.submit-score').on('click', function(){
+
+	let input1 = $("#input1").val();
+	let input2 = $("#input2").val();
+	let input3 = $("#input3").val();
+	let input4 = $("#input4").val();
+
+	if (input1 !== "") {
+		name = input1;
+	} else if (input2 !== "") {
+		name = input2;
+	} else if (input3 !== "") {
+		name = input3;
+	} else if (input4 !== "") {
+		name = input4;
+	};
+	logScore();
+	closeModal();
+});
+
+$('.skip').on('click', function(){
+	closeModal();
+});
+
 
 // Map out the pads on the keys
 
@@ -139,24 +171,19 @@ $(document).on('mousedown', function() {
 	$('.scoreTic').text(score)
 });
 
-$('.skip').on('click', function(){
-	closeModal();
-})
 
 		//-------------------------------- Functions --------------------------------//
 
 // Pad class change animation
 const fadeClass = (pad) => {
-	console.log(pad, 'pad from fadeClass');
 	$(pad).switchClass('pads', 'padHit'/*, 1000, 'swing'*/)
 	// resetClass(pad);
 
-}
+};
 
 const resetClass = (pad) => {
-	console.log(pad);
 	$(pad).switchClass('padHit', 'pads'/*, 1000, 'swing'*/)
-}
+};
 
 // Web Audio API load audio from HTML 'data-sound'
 const loadAudio = (object, audioLink) => {
@@ -175,7 +202,7 @@ const loadAudio = (object, audioLink) => {
         });
     }
     request.send();
-}
+};
 
 
 
@@ -192,18 +219,17 @@ const addAudioProperties = (object) => {
         s.start(0);
         object.s = s;
     }
-}
+};
 
 // function to trigger pad glow
 const padGlow = (pad) => {
-	console.log(pad);
 	$(pad).children('.pad-glow').remove()
     let glowDiv = $('<div class="pad-glow">')
     $(pad).append(glowDiv)
     glowDiv.fadeOut('50')
     $(pad).addClass('padHit');
     // console.log(context.currentTime + ' --- This is when(padGlow ran');
-}
+};
 
 // rangeCheck to score hit
 const rangeCheck = (roundPosition, target) => {
@@ -313,7 +339,7 @@ const hitCheck = (pad, roundStart) => {
 			console.log("hitCheck missed all checks");
 		}
  	}
-}
+};
 
 // functions to play each pad (to trigger on keypress)
 const playPad = (buffer, pad) => {
@@ -331,7 +357,7 @@ const roundEnd = () => {
 	handleMetal();
 	showMetal();
 	console.log("roundEnd ran");
-}
+};
 
 // modal pop up calls according to what the score is 
 
@@ -342,10 +368,17 @@ const showMetal = () => {
 };
 
 const closeModal = () => {
+	// reset modal status
 	$(".modal1").css('display','none');
+	$(".gold").css('display','none');
+	$(".silver").css('display','none');
+	$(".bronze").css('display','none');
+	$(".fail").css('display','none');
+
+	// reset score and display
 	score = 0;
 	$('.scoreTic').text(score);
-}
+};
 
 // change metal value based on current store
 const handleMetal = () => {
@@ -358,7 +391,7 @@ const handleMetal = () => {
 	} else if (score >= 3000) {
 		metal = "gold";
 	}
-}
+};
 
 
 		//-------------------------------- Objects --------------------------------//
@@ -555,18 +588,52 @@ const config = {
 };
 
 firebase.initializeApp(config);
-
 console.log(firebase);
 
 const database = firebase.database();
+let ref = database.ref('scores');
 
-const logScore = (user, currentScore) => {
+// submit score to firebase database
+const logScore = () => {
 	let data = {
-		name: user,
-		score: currentScore
+		name: name,
+		score: score
 	}
 
-	let ref = database.ref('scores');
 	console.log(data);
 	ref.push(data);
+};
+
+// handle the firebase data recieved 
+const gotData = (data) => {
+	let scores = data.val();
+	let keys = Object.keys(scores);
+	leaderboard = [];
+	for (let i = 0; i < keys.length; i++) {
+		let k = keys[i];
+		let user = scores[k].name;
+		let topScore = scores[k].score;
+		leaderboard.push({
+			name: user,
+			score: topScore
+		})
+	};
+	leaderboard.sort(function(a, b) {
+    	return (b.score) - (a.score);
+	});
+	buildLeaderboard();
+	console.log("buildLeaderboard ran using this: " + leaderboard);
+};
+
+const errData = (err) => {
+	console.log(err);
+};
+
+const buildLeaderboard = () => {
+	$(".leader-names").empty();
+	$(".leader-scores").empty();
+	for (let i = 0; i < leaderboard.length; i++) {
+		$(".leader-names").append('<li>' + leaderboard[i].name + '</li>');
+		$(".leader-scores").append('<li>' + leaderboard[i].score + '</li>');
+	};
 };
