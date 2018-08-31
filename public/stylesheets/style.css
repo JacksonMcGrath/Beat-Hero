@@ -3,28 +3,10 @@ body {
 	background-size: cover;
 	/*background-color: #242424;*/
 	margin: 0;
-	font-family: 'Oswald';
+	font-family: 'Oswald', Impact, sans-serif;
 	font-weight: 200;
 	overflow-x: hidden;
-}
-
-button {
-	width: 120px;
-	height: 40px;
-	background-image: url("https://i.imgur.com/mvigQIb.jpg");
-	background-size: cover;
-	border: none;
-	font-family: 'Oswald';
-	font-weight: 300;
-	font-size: 100%;
-	color: grey;
-}
-
-button:hover {
-	animation-name: pad-fade-stay;
-	animation-duration: .25s;
-	animation-timing-function: ease;
-	animation-fill-mode: forwards;
+	overflow-y: hidden;
 }
 
 h1 {
@@ -46,6 +28,8 @@ li {
 	margin-bottom: 10px;
 }
 
+/*---------------------------------------------------------   Text Classes   ---------------------------------------------------------*/
+
 .title {
 	width: 100vw;
 	color: rgba(204,152,80,1);
@@ -55,8 +39,138 @@ li {
 	margin: 20px;
 }
 
+.minor-title {
+	margin: 0 auto;
+	text-align: center;
+	font-size: 200%;
+	font-weight: 300;
+	color: rgba(204,152,80,1);
+}
+
+.big-gold {
+	font-size: 250%;
+	font-weight: 400;
+	color: rgba(204,152,80,1);
+}
+
+.big-grey {
+	font-size: 250%;
+	font-weight: 400;
+	color: #898989;
+}
+
+.normal-grey {
+	font-size: 150%;
+	font-weight: 300;
+	color: grey;
+}
+
+.bold-gold {
+	font-size: 100%;
+	font-weight: 400;
+	color: rgba(204,152,80,1);
+}
+
+.small-dark {
+	font-size: 80%;
+	color: grey;
+}
+
+.medium-gold {
+	font-size: 200%;
+	font-weight: 200;
+	color: rgba(204,152,80,1);
+}
+
+.small-gold {
+	margin: -10px;
+	font-size: 160%;
+	font-weight: 200;
+	color: rgba(204,152,80,1);
+}
+
+.bigger-gold {
+	font-size: 600%;
+	font-weight: 400;
+	color: rgba(204,152,80,1);
+}
+
+.bigger-gold-faded {
+	font-size: 600%;
+	font-weight: 400;
+	color: rgba(204,152,80,.0);
+}
+
+.thin {
+	font-weight: 100;
+}
+
+.minus-margin {
+	margin: -10px;
+}
+
+
+/*---------------------------------------------------------   Button Classes   ---------------------------------------------------------*/
+
+button {
+	width: 120px;
+	height: 40px;
+	background-image: url("https://i.imgur.com/mvigQIb.jpg");
+	background-size: cover;
+	border: none;
+	font-family: 'Oswald', Impact, sans-serif;
+	font-weight: 300;
+	font-size: 100%;
+	color: grey;
+	cursor: pointer;
+}
+
+button:hover {
+	animation-name: pad-fade-stay;
+	animation-duration: .25s;
+	animation-timing-function: ease;
+	animation-fill-mode: forwards;
+}
+
+.close-btn {
+	color: #292929;
+	width: 50px;
+	font-weight: 600;
+	font-size: 120%;
+	position: fixed;
+	top: 85px;
+	left: 1200px;
+}
+
+.close-btn:hover {
+	color: rgba(204,152,80,1);
+	cursor: pointer;
+}
+
+.center-btn {
+	margin: 0 15px;
+}
+
+.button-container {
+	width: 390px;
+	height: 110px;
+	margin: 0 auto;
+	margin-top: 20px;
+	text-align: center;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+/*---------------------------------------------------------   Main   ---------------------------------------------------------*/
+
 .logo {
-	width: 400px;
+	width: 300px;
+	text-align: center;
+	margin: 0 auto;
+}
+
+.logo2 {
+	width: 600px;
 	text-align: center;
 	margin: 0 auto;
 }
@@ -67,18 +181,23 @@ li {
 	text-align: center;
 }
 
-.instrument {
-	background-image: url('https://i.imgur.com/WbB3AWT.png');
-	width: 960px;
-	height: 552px;
+.instrument-container {
+	width: 1002px;
 	margin: 0 auto;
-	/*box-shadow: 0 0 50px 10px #1C1C1C;*/
+}
+
+.instrument {
+	background-image: url('https://i.imgur.com/xMKPwd6.jpg');
+	width: 1000px;
+	height: 592px;
+	margin: 0 auto;
+	box-shadow: -5px 5px 60px -5px black;
 	display: flex;
 }
 
 .right-pannel {
 	height: 530px;
-	margin: 20px 20px 20px 0px;
+	margin: 40px 40px 40px 0px;
 	display: inline-block;
 }
 
@@ -100,33 +219,11 @@ li {
 	overflow-x: hidden;
 }
 
-.minor-title {
-	margin: 0 auto;
-	text-align: center;
-	font-size: 200%;
-	font-weight: 300;
-	color: rgba(204,152,80,1);
-}
-
 .break {
 	width: 300px;
 	height: 2px;
 	background-color: rgb(204,152,80);
 	margin: 0 auto;
-}
-
-.style-3::-webkit-scrollbar-track {
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	background-color: #292929;
-}
-
-.style-3::-webkit-scrollbar {
-	width: 6px;
-	background-color: #F5F5F5;
-}
-
-.style-3::-webkit-scrollbar-thumb {
-	background-color: #404040;
 }
 
 .leaderboard-split {
@@ -154,31 +251,17 @@ li {
 	margin-top: 40px;
 }
 
-.button-container {
-	width: 390px;
-	height: 110px;
-	margin: 0 auto;
-	margin-top: 20px;
-	text-align: center;
-	display: flex;
-	flex-wrap: wrap;
-}
-
 .highlight {
 	background-image: url("https://i.imgur.com/tENmVe5.jpg");
 }
 
-.center-btn {
-	margin: 0 15px;
-}
-
 .pad-container {
-	margin: 20px;
-	background-image: url("https://i.imgur.com/eNC9W6B.png"); 
+	margin: 40px 20px 0 40px;
+	background-image: url("https://image.ibb.co/mGXuHp/pad_container_lrg.jpg"); 
 	background-size: cover;
 	width: 510px;
 	height: 510px;
-	display: inline-block;
+	display: inline-block; 
 }
 
 .pads {
@@ -189,6 +272,7 @@ li {
 	margin: 10px;
 	display: inline-block;
 	position: relative;
+	box-shadow: -3px 3px 10px 0 rgba(0,0,0,.3);
 }
 
 .underlay {
@@ -197,29 +281,6 @@ li {
 	animation-name: pad-fade;
 	animation-duration: 1.5s;
 	position: relative;
-}
-
-@keyframes pad-fade {
-	0% {
-		box-shadow: none;
-	}
-	10% {
-		box-shadow: 0 0 15px 2px rgba(204,152,80,.6);
-	}
-	100% {
-		box-shadow: none;
-	}
-}
-
-@keyframes pad-fade-stay {
-	0% {
-		box-shadow: none;
-		color: grey;
-	}
-	100% {
-		box-shadow: 0 0 15px 2px rgba(204,152,80,.6);
-		color: rgba(204,152,80,1);
-	}
 }
 
 .padHit {
@@ -252,28 +313,114 @@ li {
 	margin-left: 18px;
 }
 
-/*---------------  Modals  -------------------*/
-
-.modal1 {
-	display: none;
-	position: fixed;
-	z-index: 1;
-	left: 0;
-	top: 0;
-	height: 100%;
-	width: 100%;
-	overflow: auto;
-	background-color: rgba(0,0,0,.6);
+.scroller::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #292929;
 }
 
-.score-dialog {
-	width: 500px;
-	height: 600px;
-	background-color: #292929;
-	margin: 0 auto;
-	margin-top: 100px;
+.scroller::-webkit-scrollbar {
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+.scroller::-webkit-scrollbar-thumb {
+	background-color: #404040;
+}
+
+.flip {
+	transform: rotate(180deg);
+}
+
+.lefty {
+	text-align: left;
+}
+
+
+
+/*---------------------------------------------------------   Key Guide   ---------------------------------------------------------*/
+
+.key-guide {
+	display: none;
+	z-index: 3;
+	position: relative;
+	top: -508px;
+	left: 88px;
+	width: 413px;
+	height: 413px;
+}
+
+.key-row {
+	width: 413px;
+	margin: 0 0 81px 0;
+	display: inline-flex;
+	justify-content: space-between;
+}
+
+.key {
+	width: 40px;
+	height: 40px;
+	border: 2px solid grey;
 	text-align: center;
-	display: block;
+	border-radius: 4px;
+}
+
+.key-code {
+	color: grey;
+	font-size: 70%;
+	font-weight: 400;
+}
+
+/*---------------------------------------------------------   Animations   ---------------------------------------------------------*/
+
+@keyframes pad-fade {
+	0% {
+		box-shadow: none;
+	}
+	10% {
+		box-shadow: 0 0 15px 2px rgba(204,152,80,.6);
+	}
+	100% {
+		box-shadow: none;
+	}
+}
+
+@keyframes pad-fade-stay {
+	0% {
+		box-shadow: none;
+		color: grey;
+	}
+	100% {
+		box-shadow: 0 0 15px 2px rgba(204,152,80,.6);
+		color: rgba(204,152,80,1);
+	}
+}
+
+@keyframes pop-fade {
+	0% {
+		color: rgba(204,152,80,.6);
+		font-size: 600%;
+	}
+	10% {
+		color: rgba(204,152,80,.8);
+		font-size: 620%;
+	}
+	20% {
+		font-size: 600%;
+	}
+	50% {
+		color: rgba(204,152,80,.2);
+	}
+	100% {
+		color: rgba(204,152,80,0);
+	}
+}
+
+
+
+/*---------------------------------------------------------   Modal Classes   ---------------------------------------------------------*/
+
+.modal-flex {
+	display: inline-flex;
 }
 
 .gold {
@@ -292,31 +439,80 @@ li {
 	display: none;
 }
 
-.metal {
+.modal1 {
+	display: none;
+	position: fixed;
+	z-index: 5;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	overflow: auto;
+	background-color: rgba(0,0,0,.6);
+}
+
+.medium-modal {
+	width: 500px;
+	height: 600px;
+	background-color: #292929;
+	margin: 0 auto;
+	margin-top: 100px;
+	text-align: center;
+	display: none;
+}
+
+.modal2 {
+	display: none;
+	position: fixed;
+	z-index: 5;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	overflow: auto;
+	background-color: rgba(0,0,0,.6);
+}
+
+.large-modal {	
+	width: 960px;
+	height: 600px;
+	background-color: #404040;
+	margin: 0 auto;
+	margin-top: 100px;
+	text-align: center;
+	display: none;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+.how-modal {
+	display: none;
+}
+
+.about-modal {
+	display: none;
+}
+
+.modal-start {
+	width: 100%;
+	background-color: #EEEEEE;
+}
+
+.modal-spacing {
+	height: 100px;
+}
+
+.medal {
 	width: 200px;
 }
 
-.big-gold {
-	font-size: 250%;
-	font-weight: 400;
-	color: rgba(204,152,80,1);
-}
-
-.big-grey {
-	font-size: 250%;
-	font-weight: 400;
-	color: #898989;
-}
-
-.bigger-gold {
-	font-size: 600%;
-	font-weight: 400;
-	color: rgba(204,152,80,1);
+.small-medal {
+	width: 120px;
 }
 
 .modal-options {
 	display: flex;
-	width: 500px;
+	width: 100%;
 	justify-content: space-around;
 }
 
@@ -329,16 +525,11 @@ li {
 	text-align: center;
 	color: grey;
 	font-size: 120%;
-	font-family: 'Oswald';
+	font-family: 'Oswald', Impact, sans-serif;
 }
 
 .modal-message {
 	margin: 10px;
-}
-
-.small-dark {
-	font-size: 80%;
-	color: grey;
 }
 
 .again {
@@ -349,4 +540,57 @@ li {
 	background-image: none;
 	color: #292929;
 	font-size: 140%;
+}
+
+.img-medium {
+	width: 600px;
+	height: 375px;
+}
+
+.off-left {
+	margin: 45px 0 0 -200px;
+}
+
+.line-break {
+	width: 80%;
+	height: 2px;
+	margin: 0 auto;
+	background-color: rgba(204,152,80,1);
+}
+
+.modal-fit {
+	text-align: left;
+	margin: 0 0 0 40px;
+	width: 420px;
+}
+
+.small-fit {
+	text-align: left;
+	margin: 40px 40px 0 40px;
+	width: 260px;
+}
+
+.eighty {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.nine {
+	width: 90%;
+	margin: 0 auto;
+}
+
+.dark-footer {
+	padding: 20px;
+	background-color: #292929;
+}
+
+.split {
+	justify-content: space-around;
+	display: inline-flex;
+	width: 900px;
+}
+
+.twin {
+	width: 400px;
 }

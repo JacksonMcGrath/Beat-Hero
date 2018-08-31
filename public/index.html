@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
 	<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
 	<link href="https://fonts.googleapis.com/css?family=Oswald:100,200,300,400,500,600" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Rajdhani" rel="stylesheet">
@@ -12,57 +13,123 @@
 	<div class="logo-container">
 		<img class="logo" src="https://i.imgur.com/yr6J94E.png">
 	</div>
-	<div class="instrument">
-		<section class="pad-container">
-			<div class="pads underlay" id="pad13"></div>
-			<div class="pads underlay" id="pad14"></div>
-			<div class="pads underlay" id="pad15"></div>
-			<div class="pads underlay" id="pad16"></div>
-			<div class="pads underlay" id="pad9"></div>
-			<div class="pads underlay" id="pad10"></div>
-			<div class="pads underlay" id="pad11"></div>
-			<div class="pads underlay" id="pad12"></div>
-			<div class="pads underlay" id="pad5" data-soundname="bassF" data-sound="/audio/Synths/harmonic_C4.wav"></div>
-			<div class="pads underlay" id="pad6" data-soundname="bassC" data-sound="/audio/Synths/pluck_C3.wav"></div>
-			<div class="pads underlay" id="pad7" data-soundname="sample4" data-sound=""></div>
-			<div class="pads underlay" id="pad8" data-soundname="sample5" data-sound=""></div>
-			<div class="pads underlay" id="pad1" data-soundname="kick" data-sound="/audio/Kicks/Kick_3k_Deep.wav"></div>
-			<div class="pads underlay" id="pad2" data-soundname="snare" data-sound="/audio/Snares/Snare_70s_Vinyl.wav"></div>
-			<div class="pads underlay" id="pad3" data-soundname="hihat" data-sound="/audio/Cymbals/Hihat_Bluesbreak_Closed.wav"></div>
-			<div class="pads underlay" id="pad4" data-soundname="clap" data-sound="/audio/Alt_Percusion/Cowbell_LatinTing.wav"></div>
-		</section>
-		<section class="right-pannel">
-			<div id="display">
-				<div class="left">
-					<h2>Round 1</h2>
-				</div>
-				<div class="right">
-					<h1 class="scoreTic">0</h1>
-				</div>
-			</div>
-			<section class="button-container">
-				<button class="highlight" id="play-round-one">Play Round</button>
-				<button class="center-btn" id="round-one-preview">Preview Round</button>
-				<button id="next-round">Next Round</button>
-				<button class="highlight" id="how-to-play">How to Play</button>
-				<button class="center-btn" id="about">About</button>
-				<button id="full-preview">Full Preview</button>
+	<div class="instrument-container">
+		<div class="instrument">
+			<section class="pad-container">
+				<div class="pads underlay" id="pad13"></div>
+				<div class="pads underlay" id="pad14"></div>
+				<div class="pads underlay" id="pad15"></div>
+				<div class="pads underlay" id="pad16"></div>
+				<div class="pads underlay" id="pad9"></div>
+				<div class="pads underlay" id="pad10"></div>
+				<div class="pads underlay" id="pad11"></div>
+				<div class="pads underlay" id="pad12"></div>
+				<div class="pads underlay" id="pad5" data-soundname="bassF" data-sound="/audio/Synths/harmonic_C4.wav"></div>
+				<div class="pads underlay" id="pad6" data-soundname="bassC" data-sound="/audio/Synths/pluck_C3.wav"></div>
+				<div class="pads underlay" id="pad7" data-soundname="sample4" data-sound=""></div>
+				<div class="pads underlay" id="pad8" data-soundname="sample5" data-sound=""></div>
+				<div class="pads underlay" id="pad1" data-soundname="kick" data-sound="/audio/Kicks/Kick_3k_Deep.wav"></div>
+				<div class="pads underlay" id="pad2" data-soundname="snare" data-sound="/audio/Snares/Snare_70s_Vinyl.wav"></div>
+				<div class="pads underlay" id="pad3" data-soundname="hihat" data-sound="/audio/Cymbals/Hihat_Bluesbreak_Closed.wav"></div>
+				<div class="pads underlay" id="pad4" data-soundname="clap" data-sound="/audio/Alt_Percusion/Cowbell_LatinTing.wav"></div>
 			</section>
-			<div class="leaderboard style-3">
-				<h3 class="minor-title">Leaderboard</h3>
-				<div class="break"></div>
-				<div class="leaderboard-split">
-					<ol class="leader-names"></ol>
-					<ul class="leader-scores"></ul>
+			<section class="right-pannel">
+				<div id="display">
+					<div class="left">
+						<h2>Round 1</h2>
+					</div>
+					<div class="right">
+						<h1 class="scoreTic">0</h1>
+					</div>
+				</div>
+				<section class="button-container">
+					<button class="highlight" id="play-round-one">Play Round</button>
+					<button class="center-btn" id="round-one-preview">Preview Round</button>
+					<button id="keys">Key Guide</button>
+					<button class="highlight" id="how">How to Play</button>
+					<button class="center-btn" id="about">About</button>
+					<button id="full-preview">Full Preview</button>
+				</section>
+				<div class="leaderboard scroller">
+					<h3 class="minor-title">Leaderboard</h3>
+					<div class="break"></div>
+					<div class="leaderboard-split">
+						<ol class="leader-names"></ol>
+						<ul class="leader-scores"></ul>
+					</div>
+				</div>
+				<div class="game-message">
+					<h2 id="message" class="bigger-gold-faded thin"></h2>
+				</div>
+			</section>
+		</div>
+		<div class="key-guide">
+			<div class="key-row">
+				<div class="key">
+					<p class="key-code">1</p>
+				</div>
+				<div class="key">
+					<p class="key-code">2</p>
+				</div>
+				<div class="key">
+					<p class="key-code">3</p>
+				</div>
+				<div class="key">
+					<p class="key-code">4</p>
 				</div>
 			</div>
-		</section>
+			<div class="key-row">
+				<div class="key">
+					<p class="key-code">Q</p>
+				</div>
+				<div class="key">
+					<p class="key-code">W</p>
+				</div>
+				<div class="key">
+					<p class="key-code">E</p>
+				</div>
+				<div class="key">
+					<p class="key-code">R</p>
+				</div>
+			</div>
+			<div class="key-row">
+				<div class="key">
+					<p class="key-code">A</p>
+				</div>
+				<div class="key">
+					<p class="key-code">S</p>
+				</div>
+				<div class="key">
+					<p class="key-code">D</p>
+				</div>
+				<div class="key">
+					<p class="key-code">F</p>
+				</div>
+			</div>
+			<div class="key-row">
+				<div class="key">
+					<p class="key-code">Z</p>
+				</div>
+				<div class="key">
+					<p class="key-code">X</p>
+				</div>
+				<div class="key">
+					<p class="key-code">C</p>
+				</div>
+				<div class="key">
+					<p class="key-code">V</p>
+				</div>
+			</div>
+		</div>
 	</div>
+
+<!----------------------------------------------------------------- All Modals ----------------------------------------------------------------->
+
 	<div class="modal1">
-		<div class="score-dialog">
+		<div class="medium-modal">
 			<div class="gold">
 				<h2 class="big-gold">GOLD</h2>
-				<img class="metal" src="https://i.imgur.com/Tn0oWAA.png">
+				<img class="medal" src="https://i.imgur.com/Tn0oWAA.png">
 				<h2 class="scoreTic bigger-gold">0</h2>
 				<p class="modal-message">Enter a name to submit your score to the leaderboard<br><span class="small-dark">Or continue without saving the score</span></p>
 				<input id="input1" class="name-input" type="text" name="name" maxlength="10" placeholder="Enter You Name Here">
@@ -73,7 +140,7 @@
 			</div>
 			<div class="silver">
 				<h2 class="big-gold">SILVER</h2>
-				<img class="metal" src="https://i.imgur.com/lquB1vI.png">
+				<img class="medal" src="https://i.imgur.com/lquB1vI.png">
 				<h2 class="scoreTic bigger-gold">0</h2>
 				<p class="modal-message">Enter a name to submit your score to the leaderboard<br><span class="small-dark">Or continue without saving the score</span></p>
 				<input id="input2" class="name-input" type="text" name="name" maxlength="10" placeholder="Enter You Name Here">
@@ -84,7 +151,7 @@
 			</div>
 			<div class="bronze">
 				<h2 class="big-gold">BRONZE</h2>
-				<img class="metal" src="https://i.imgur.com/seet2DU.png">
+				<img class="medal" src="https://i.imgur.com/seet2DU.png">
 				<h2 class="scoreTic bigger-gold">0</h2>
 				<p class="modal-message">Enter a name to submit your score to the leaderboard<br><span class="small-dark">Or continue without saving the score</span></p>
 				<input id="input3" class="name-input" type="text" name="name" maxlength="10" placeholder="Enter You Name Here">
@@ -95,10 +162,98 @@
 			</div>
 			<div class="fail">
 				<h2 class="big-grey">You didn't pass. Try Again</h2>
-				<img class="metal" src="https://i.imgur.com/bbombjR.png">
+				<img class="medal" src="https://i.imgur.com/bbombjR.png">
 				<h2 class="scoreTic bigger-gold">0</h2>
 				<div class="modal-options">
 					<button class="skip again">Try Again</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal2">
+		<div class="large-modal scroller">
+			<div class="about-modal">
+				<h4 class="close-btn">X</h4>
+				<div >
+					<div class="modal-spacing"></div>
+					<img class="logo2" src="https://i.imgur.com/yr6J94E.png">
+					<div class="modal-spacing"></div>
+				</div>
+				<h3 class="bigger-gold thin eighty flip">^</h3>
+				<div class="modal-spacing"></div>
+				<div class="modal-flex">
+					<img class="img-medium off-left" src="https://i.imgur.com/hoUg5MK.png" >
+					<p class="modal-fit normal-grey">Beat Hero is a virtual instrument built to look and function like a beat pad. Hip hop producers such as J Dilla and Pete Rock made beat pads famous in the early 90s by producing whole records with just this instrument. <br> <br> The idea behind the instrument is that each pad is loaded with a unique audio sample to create a complete "drum kit". The user hits the pads to trigger the samples and can create whole songs by layering tracks ontop of eachother.</p>
+				</div>
+				<div class="modal-spacing"></div>
+				<div class="modal-flex">
+					<p class="small-fit normal-grey">This video breaks down the history behind beat pads and the craft involved in chopping, manipulating, and constructing songs. It also highlights how J Dilla changed the game with his creative use of the machine.</p>
+					<iframe width="560" height="315" src="https://www.youtube.com/embed/SENzTt3ftiU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+				</div>
+				<div class="modal-spacing"></div>
+				<h2 class="bigger-gold">Web Audio API</h2>
+				<p class="normal-grey nine">Beat Hero was built using the Web Audio API to handle the audio sequencing and playback. The API processes audio with accurate timing and low latency which allowed me to sequence a whole beat without delay or distortion. The timing was an important factor in creating a functional game with such a strong need for accuracy in playback and measurement</p>
+				<div class="modal-spacing"></div>
+				<div class="dark-footer">
+					<div class="modal-options">
+						<button class="skip">Close</button>
+					</div>				
+				</div>
+			</div>
+			<div class="how-modal">
+				<h4 class="close-btn">X</h4>
+				<div >
+					<div class="modal-spacing"></div>
+					<img class="logo2" src="https://i.imgur.com/yr6J94E.png">
+					<div class="modal-spacing"></div>
+				</div>
+				<h3 class="bigger-gold thin eighty flip">^</h3>
+				<div class="modal-spacing"></div>
+				<h2 class="bigger-gold">How to Play</h2>
+				<div class="split">
+					<div class="twin">
+						<h3 class="big-grey">Keyboard</h3>
+						<p class="normal-grey">By pressing CAPS LOCK you can use the keyboard to play each pad, and you can turn on the 'key guide' under the display to get situated with what key triggers what pad.</p>
+					</div>
+					<div class="twin">
+						<h3 class="big-grey">Touch</h3>
+						<p class="normal-grey">You can use a touch interface to play like you would a real beat pad, just tapping the pads. This allows for a more realistic experience and better practice for the real thing.</p>
+					</div>
+				</div>
+				<div class="modal-spacing"></div>
+				<h3 class="big-gold">Gameplay</h3>
+				<p class="normal-grey eighty lefty">First, use the <span class="bold-gold">"Preview Round"</span> button to hear the beat that you will attempt to recreate and practice along until you have the hang of it. <br> <br> Second, press the <span class="bold-gold">"Play Round"</span> button to initiate the round. The round begins with a four beat count in before the beat begins playing. Hit the right pad on time and you will be rewarded with points. 
+					<br>
+					<br><span class="bold-gold">200 pts</span> for a Perfect hit 
+					<br><span class="bold-gold">125 pts</span> for a Great hit
+					<br><span class="bold-gold">75 pts</span> for a Good hit
+					<br><span class="bold-gold">-100 pts</span> for a Miss
+				</p>
+				<div class="modal-spacing"></div>
+				<h3 class="big-gold">Medals</h3>
+				<p class="normal-grey">After the round you, if you have enough points you will be awarded a metal and a chance to join the live leaderboard. If you do not have a passing score you can try again. The metals are awarded as follows.</p>
+				<div class="split">
+					<div>
+						<img class="medal" src="https://i.imgur.com/seet2DU.png">
+						<p class="small-gold">Bronze</p>
+						<p class="big-gold">1800 pts</p>
+					</div>
+					<div>
+						<img class="medal" src="https://i.imgur.com/lquB1vI.png">
+						<p class="normal-grey minus-margin">Silver</p>
+						<p class="big-gold">2400 pts</p>
+					</div>
+					<div>
+						<img class="medal" src="https://i.imgur.com/Tn0oWAA.png">
+						<p class="small-gold">Gold</p>
+						<p class="big-gold">3000 pts</p>
+					</div>
+				</div>
+				<div class="modal-spacing"></div>
+				<div class="dark-footer">
+					<div class="modal-options">
+						<button class="skip">Close</button>
+					</div>				
 				</div>
 			</div>
 		</div>
